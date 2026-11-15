@@ -28,7 +28,7 @@ function openPanel(name, anchor) {
   panel.classList.add('open'); panel.setAttribute('aria-hidden', 'false');
   body.classList.add('panel-open'); openName = name;
   document.querySelectorAll('.nav a').forEach(a => a.setAttribute('aria-current', String(a.dataset.open === name)));
-  const url = new URL(location.href); url.searchParams.set('open', name); history.replaceState(null, '', url);
+  try { const url = new URL(location.href); url.searchParams.set('open', name); history.replaceState(null, '', url); } catch {}
   const scroller = panel.querySelector('.panel-body');
   if (anchor) {
     const el = panel.querySelector('#c-' + anchor);
@@ -41,7 +41,7 @@ function closePanel() {
   document.querySelectorAll('.panel.open').forEach(p => { p.classList.remove('open'); p.setAttribute('aria-hidden', 'true'); });
   body.classList.remove('panel-open'); openName = null;
   document.querySelectorAll('.nav a').forEach(a => a.setAttribute('aria-current', 'false'));
-  const url = new URL(location.href); url.searchParams.delete('open'); history.replaceState(null, '', url);
+  try { const url = new URL(location.href); url.searchParams.delete('open'); history.replaceState(null, '', url); } catch {}
 }
 document.addEventListener('click', e => {
   const o = e.target.closest('[data-open]');
