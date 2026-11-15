@@ -1,0 +1,68 @@
+{
+  "$schema": "https://raw.githubusercontent.com/jsonresume/resume-schema/v1.0.0/schema.json",
+  "basics": {
+    "name": "Harsh Nigam",
+    "label": "Marketing Strategist · SEO, AI Search, Paid Ads & Social Media",
+    "email": "harshnigam788@gmail.com",
+    "phone": "+91 99282 56987",
+    "url": "https://harshnigam788-ui.github.io/portfolio/",
+    "summary": "Marketing Strategist at IInfotanks, an AI-powered agency, leading a 21-person team across content, design, development, QC and off-page SEO. Looks after SEO, AI search (AEO/GEO), Google and Meta Ads, and social media for 10+ clients in India and the US: 5–10% traffic growth every month, 10–15% more leads every quarter, and around 2.5:1 ROAS on paid campaigns.",
+    "location": { "city": "Bengaluru", "region": "Karnataka", "countryCode": "IN" },
+    "profiles": [{ "network": "LinkedIn", "username": "harshnigam15", "url": "https://www.linkedin.com/in/harshnigam15" }]
+  },
+  "work": [
+    {
+      "name": "IInfotanks", "position": "Marketing Strategist", "url": "https://www.iinfotanks.com", "location": "Bengaluru, India",
+      "startDate": "2026-06",
+      "summary": "AI-powered marketing agency. Promoted June 2026.",
+      "highlights": [
+        "Lead a 21-person team of writers, designers, developers, QC and off-page specialists across 10+ retained clients in SaaS, staffing, real estate, manufacturing and more, in India and the US.",
+        "Run search end to end for every account — on-page, off-page, technical SEO and AI search visibility — with the team turning over 300+ webpages a month.",
+        "Consistently meet monthly KPIs: traffic up 5–10% a month for every client and leads up 10–15% a quarter.",
+        "Manage Google Ads and Meta Ads end to end, averaging 2.5:1 ROAS while steadily bringing CPCs down.",
+        "Plan and run social for clients and the agency, from content calendars and LinkedIn thought leadership to paid social on Meta.",
+        "Built reporting that tracks how client brands are mentioned and described in ChatGPT, Gemini, Perplexity, Claude and Copilot.",
+        "Built the production system — trackers and dashboards that move every page from content to design, development, publishing and QC on time.",
+        "Turn live-crawl SEO and AI visibility audits into tiered retainer proposals: 60+ produced for prospects in India, the US and beyond."
+      ]
+    },
+    {
+      "name": "IInfotanks", "position": "Content Strategist (AI-Driven)", "url": "https://www.iinfotanks.com",
+      "startDate": "2024-02", "endDate": "2026-05",
+      "highlights": [
+        "Shaped content strategy and editorial calendars across blogs, social, email and websites, tying each piece to lead generation and brand goals.",
+        "Ran a six-month SEO engagement for Sarvam AI (Mar–Aug 2025) that led to IInfotanks staffing their in-house marketing team and an ongoing consulting relationship.",
+        "Managed creation, editing and publishing with a consistent brand voice, including executive LinkedIn posts and video scripts.",
+        "Ran email campaigns with A/B testing and segmentation, and grew social channels using trend tracking and analytics."
+      ]
+    },
+    {
+      "name": "StockGro", "position": "Social Media Strategy Intern · Financial Content Writing Intern", "location": "Bengaluru",
+      "startDate": "2021-09", "endDate": "2023-06",
+      "highlights": ["Ran SEO, SEM and social media campaigns, managed marketing budgets, and produced research-backed financial content on markets and economic trends."]
+    },
+    {
+      "name": "Digital Ipsum", "position": "Digital Marketing/HR Coordinator Intern", "location": "Remote, Singapore",
+      "startDate": "2020-06", "endDate": "2020-08",
+      "highlights": ["Ideated marketing initiatives that delivered 12% growth within a month and ran performance-based campaigns."]
+    }
+  ],
+  "education": [
+    { "institution": "Jain University", "studyType": "Bachelor of Management Studies", "area": "Marketing & Finance", "startDate": "2020-07", "endDate": "2023-05", "score": "3.74/4" }
+  ],
+  "certificates": [{ "name": "The Complete Content Analyst Course", "issuer": "Udemy", "date": "2023" }],
+  "publications": [{ "name": "Zomato's IPO: A Brief Insight", "publisher": "JETIR", "releaseDate": "2023-06" }],
+  "skills": [
+    { "name": "SEO & AI Search", "keywords": ["On-page & off-page SEO", "AI SEO", "Generative Engine Optimization (GEO)", "Answer Engine Optimization (AEO)", "Google AI Overviews", "Local SEO"] },
+    { "name": "Technical SEO", "keywords": ["Schema markup (JSON-LD)", "Structured data", "Entity optimization", "Site architecture", "Internal linking", "Crawlability & indexing", "llms.txt"] },
+    { "name": "Content & Social", "keywords": ["Content strategy", "Content marketing", "Social media marketing", "Topical authority", "Editorial calendars", "LinkedIn thought leadership", "Email marketing"] },
+    { "name": "Paid & Performance Marketing", "keywords": ["Google Ads", "Meta Ads", "End-to-end campaign management", "ROAS & CPC optimization", "PPC/SEM", "Lead generation", "A/B testing"] },
+    { "name": "Analytics & Reporting", "keywords": ["Performance analysis", "GA4", "Google Search Console", "AI visibility & citation tracking", "Rank tracking", "KPI dashboards", "SQL", "Tableau"] },
+    { "name": "Leadership & AI Operations", "keywords": ["Team leadership", "Cross-functional collaboration", "Client & stakeholder management", "Workflow automation (Apps Script)", "ChatGPT", "Claude", "Gemini", "MS Excel (advanced)"] }
+  ],
+  "meta": {
+    "canonical": "https://harshnigam788-ui.github.io/portfolio/resume/resume.json",
+    "pdf": "https://harshnigam788-ui.github.io/portfolio/resume/Harsh_Nigam_Resume_2026.pdf",
+    "lastModified": "2026-11-15"
+  }
+}

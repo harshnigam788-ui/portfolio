@@ -2,6 +2,10 @@
 
 > Marketing Strategist at IInfotanks (Bengaluru, India). Leads a 21-person team running SEO, AI search (AEO/GEO), Google and Meta Ads, social media and content for 10+ clients in India and the US.
 
+## Resume
+- PDF: https://harshnigam788-ui.github.io/portfolio/resume/Harsh_Nigam_Resume_2026.pdf
+- JSON (JSON Resume schema): https://harshnigam788-ui.github.io/portfolio/resume/resume.json
+
 ## Focus
 - SEO and AI search visibility: on-page, off-page, technical SEO, schema (JSON-LD), entity optimization, llms.txt, AI citation tracking across ChatGPT, Gemini, Perplexity, Claude and Copilot
 - Paid media: Google Ads and Meta Ads, averaging 2.5:1 ROAS
@@ -10,9 +14,7 @@
 ## Clients (full marketing)
 VALiNTRY360 (valintry360.com), VALiNTRY (valintry.com), Ignite HCM (ignitehcm.com), Bullseye Engagement (bullseyeengagement.com), Calance (calanceus.com), Prateek Group (prateekgroup.com), TAG Manufacturing (tagmfg.us), Advayan (advayan.com), ZAP FIRE (zapfire.org)
 
-## On this site
-- A portrait made of 700+ tiles of client work; the Index panel (?open=index) lists every page with links to the live sites
-
-## Links
+## Contact
+- Email: harshnigam788@gmail.com
+- Phone: +91 99282 56987
 - LinkedIn: https://www.linkedin.com/in/harshnigam15
-- Contact: see the Contact panel on this site (?open=contact)

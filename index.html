@@ -4,185 +4,392 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
 <title>Harsh Nigam — Marketing Strategist · SEO, AI Search, Paid &amp; Social</title>
-<meta name="description" content="Harsh Nigam is a Bengaluru-based marketing strategist at IInfotanks, leading a 21-person team across SEO, AI search (AEO/GEO), Google and Meta Ads, and social media. Fly through 700+ pieces of client work.">
-<meta name="theme-color" content="#09090b">
+<meta name="description" content="Harsh Nigam, Marketing Strategist in Bengaluru. SEO, AI search (AEO/GEO), Google and Meta Ads, and social media for brands in India and the US. See 700+ pieces of client work and download his resume.">
+<meta name="theme-color" content="#080C24">
+<link rel="canonical" href="https://harshnigam788-ui.github.io/portfolio/">
 <meta property="og:type" content="profile">
+<meta property="og:url" content="https://harshnigam788-ui.github.io/portfolio/">
 <meta property="og:title" content="Harsh Nigam — Marketing Strategist">
-<meta property="og:description" content="A portrait made of 700+ pieces of client work: websites, blogs, service pages and case studies across SEO, AI search, paid and social.">
-<meta property="og:image" content="og.png">
+<meta property="og:description" content="SEO, AI search, paid and social for brands in India and the US. A portrait made of 700+ pieces of client work.">
+<meta property="og:image" content="https://harshnigam788-ui.github.io/portfolio/og.png">
 <meta name="twitter:card" content="summary_large_image">
 <link rel="icon" href="favicon.svg" type="image/svg+xml">
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Anybody:ital,wdth,wght@0,50..150,100..900;1,50..150,100..900&family=Hanken+Grotesk:wght@400;500;600&family=IBM+Plex+Mono:wght@400;500&display=swap">
 <link rel="stylesheet" href="style.css">
 <link rel="modulepreload" href="vendor/three.module.min.js">
-<link rel="preload" href="data/tiles.json" as="fetch" crossorigin>
-<link rel="preload" href="data/mosaic.json" as="fetch" crossorigin>
 <script type="application/ld+json">
-{
-  "@context": "https://schema.org",
-  "@type": "ProfilePage",
-  "mainEntity": {
-    "@type": "Person",
-    "name": "Harsh Nigam",
-    "jobTitle": "Marketing Strategist",
-    "worksFor": { "@type": "Organization", "name": "IInfotanks", "url": "https://www.iinfotanks.com" },
-    "address": { "@type": "PostalAddress", "addressLocality": "Bengaluru", "addressCountry": "IN" },
-    "alumniOf": { "@type": "CollegeOrUniversity", "name": "Jain University" },
-    "sameAs": ["https://www.linkedin.com/in/harshnigam15"],
-    "knowsAbout": ["Search Engine Optimization", "Answer Engine Optimization", "Generative Engine Optimization", "Technical SEO", "Schema markup", "Google Ads", "Meta Ads", "Social media marketing", "Content strategy", "AI search visibility"]
-  }
-}
+{"@context":"https://schema.org","@type":"ProfilePage","mainEntity":{"@type":"Person","name":"Harsh Nigam","jobTitle":"Marketing Strategist","email":"mailto:harshnigam788@gmail.com","telephone":"+91-99282-56987","image":"https://harshnigam788-ui.github.io/portfolio/og.png","url":"https://harshnigam788-ui.github.io/portfolio/","worksFor":{"@type":"Organization","name":"IInfotanks","url":"https://www.iinfotanks.com"},"address":{"@type":"PostalAddress","addressLocality":"Bengaluru","addressCountry":"IN"},"alumniOf":{"@type":"CollegeOrUniversity","name":"Jain University"},"knowsAbout":["Search Engine Optimization","Generative Engine Optimization","Answer Engine Optimization","Technical SEO","Schema markup","Google Ads","Meta Ads","Social Media Marketing","Content Strategy","AI search visibility"],"sameAs":["https://www.linkedin.com/in/harshnigam15"],"subjectOf":{"@type":"DigitalDocument","name":"Harsh Nigam — Resume","encodingFormat":"application/pdf","url":"https://harshnigam788-ui.github.io/portfolio/resume/Harsh_Nigam_Resume_2026.pdf"}}}
 </script>
 </head>
-<body class="loading">
-<canvas id="field" aria-hidden="true"></canvas>
+<body>
+<canvas id="gl" aria-hidden="true"></canvas>
+<div class="glow" aria-hidden="true"></div>
+<canvas class="grain" id="grain" aria-hidden="true"></canvas>
+<div class="cur" aria-hidden="true"></div>
+<div class="cur-ring" aria-hidden="true"><span>Open</span></div>
+<div class="toast" id="toast" role="status" aria-live="polite"></div>
 
-<div class="loader" id="loader" aria-hidden="true">
-  <span class="loader-mark">hn</span>
-  <span class="loader-pct" id="loaderPct">0%</span>
-</div>
+<nav class="nav" aria-label="Primary">
+  <a class="mark" href="#top" data-scroll><i></i><b>HN</b></a>
+  <ul class="mono">
+    <li><a href="#numbers" data-scroll>Numbers</a></li>
+    <li><a href="#services" data-scroll>Services</a></li>
+    <li><a href="#work" data-scroll>Work</a></li>
+    <li><a href="#clients" data-scroll>Clients</a></li>
+    <li><a href="#path" data-scroll>Path</a></li>
+    <li><a href="#resume" data-scroll>Resume</a></li>
+    <li><a href="#contact" data-scroll>Contact</a></li>
+  </ul>
+  <span class="clock mono">BLR <em id="clock">--:--</em> IST</span>
+</nav>
 
-<header class="top">
-  <a class="mark" href="./" aria-label="Harsh Nigam, home">hn<i></i></a>
-  <div class="meta-col"><span>Currently</span><p>Marketing Strategist, <a href="https://www.iinfotanks.com" target="_blank" rel="noopener">IInfotanks</a></p></div>
-  <div class="meta-col"><span>Based in</span><p>Bengaluru, India (<time id="clock">--:--</time>)</p></div>
-  <nav class="meta-col nav" aria-label="Primary"><span>Navigation</span>
-    <p><a href="?open=work" data-open="work">Work</a>, <a href="?open=index" data-open="index">Index</a>, <a href="?open=about" data-open="about">About</a>, <a href="?open=contact" data-open="contact">Contact</a></p>
-  </nav>
-</header>
+<main id="top">
+  <!-- HERO -->
+  <section class="hero" data-shape="0" aria-label="Introduction">
+    <div class="query" aria-hidden="true">
+      <svg viewBox="0 0 24 24" fill="none" stroke-width="2"><circle cx="11" cy="11" r="7"/><path d="m20 20-3.5-3.5"/></svg>
+      <span><span id="qtext">marketing strategist in bengaluru</span><span class="caret"></span></span>
+    </div>
+    <h1 class="hero-name" aria-label="Harsh Nigam"><span class="line" data-split>Harsh</span><span class="line" data-split>Nigam</span></h1>
+    <div class="hero-foot">
+      <p class="role"><strong>Marketing Strategist</strong> at IInfotanks, leading a 21-person team.<span>SEO · AI Search · Paid · Social — Bengaluru</span></p>
+      <aside class="answer" aria-label="Summary">
+        <header><b>AI answer</b><span class="mono">1 result</span></header>
+        <p>Harsh Nigam runs SEO, AI search, Google and Meta Ads, and social for 10+ brands in India and the US<a class="cite" href="#work" data-scroll>1</a>, and his job is to make the numbers move<a class="cite" href="#numbers" data-scroll>2</a>.</p>
+        <ol><li><a href="#work" data-scroll>[1] Selected work</a></li><li><a href="#numbers" data-scroll>[2] The numbers</a></li></ol>
+      </aside>
+    </div>
+    <div class="cue mono"><span>Scroll to search deeper</span><span class="bar"></span><span>2026 edition</span></div>
+  </section>
 
-<main class="hero" id="hero">
-  <div class="hero-row">
-    <p class="lede"><span class="dot"></span>I lead a 21-person team running SEO, AI search, paid media and social for brands across India and the US. My face here is made of <b id="workCount">700+</b> pieces of that work — websites, blogs, service pages and case studies. Scroll to fly through it.</p>
-    <button class="pill" id="explore">Explore the work <span>↓</span></button>
+  <!-- MANIFESTO -->
+  <section class="manifesto" data-shape="1" aria-label="Approach">
+    <p class="eyebrow mono">How I work</p>
+    <p id="manifesto">I still think content should be strategic, engaging and, dare I say, fun. It also has to ship on time, <mark>rank</mark>, and <mark>get cited</mark> by the AI engines people actually ask.</p>
+    <p class="sig mono">Harsh Nigam, Marketing Strategist</p>
+  </section>
+
+  <div class="marquee" aria-label="Industries">
+    <div class="mq-track">
+      <span>HVAC</span><span>Insurance</span><span>BFSI</span><span>Real estate</span><span>Healthcare</span><span>Legal</span><span>Manufacturing</span><span>Logistics</span><span>Renewable energy</span><span>Retail &amp; e-commerce</span><span>Edtech</span><span>FMCG</span><span>SaaS</span><span>Staffing</span>
+      <span aria-hidden="true">HVAC</span><span aria-hidden="true">Insurance</span><span aria-hidden="true">BFSI</span><span aria-hidden="true">Real estate</span><span aria-hidden="true">Healthcare</span><span aria-hidden="true">Legal</span><span aria-hidden="true">Manufacturing</span><span aria-hidden="true">Logistics</span><span aria-hidden="true">Renewable energy</span><span aria-hidden="true">Retail &amp; e-commerce</span><span aria-hidden="true">Edtech</span><span aria-hidden="true">FMCG</span><span aria-hidden="true">SaaS</span><span aria-hidden="true">Staffing</span>
+    </div>
   </div>
-  <h1 class="name"><span class="sr">Harsh Nigam, Marketing Strategist</span><span aria-hidden="true">Harsh Nigam</span></h1>
+
+  <!-- NUMBERS -->
+  <section class="numbers" id="numbers" data-shape="2" aria-labelledby="num-t">
+    <div class="num-head">
+      <p class="eyebrow mono">The numbers I'm held to</p>
+      <h2 class="st vw" id="num-t">Growth, every month. Not when it suits.</h2>
+      <p class="lede">These are the targets my team works to across every retained account, from SaaS and staffing to real estate and manufacturing.</p>
+    </div>
+    <div class="num-grid">
+      <div class="stat"><b data-count="21">21</b><p>people on my team across content, design, development, QC and off-page</p></div>
+      <div class="stat"><b data-count="10">10<sup>+</sup></b><p>retained clients in India and the US, run at the same time</p></div>
+      <div class="stat"><b data-count="300">300<sup>+</sup></b><p>web pages turned over by the team every month</p></div>
+      <div class="stat"><b>5–10<sup>%</sup></b><p>traffic growth, month on month, for every client</p></div>
+      <div class="stat"><b>10–15<sup>%</sup></b><p>more leads every quarter</p></div>
+      <div class="stat"><b>2.5:1</b><p>average return on ad spend across Google and Meta, with CPCs trending down</p></div>
+      <div class="stat"><b data-count="60">60<sup>+</sup></b><p>audit-led proposals written for prospects in India, the US and beyond</p></div>
+      <div class="stat"><b data-count="5">5</b><p>AI engines I track brand mentions in: ChatGPT, Gemini, Perplexity, Claude, Copilot</p></div>
+    </div>
+  </section>
+
+  <!-- SERVICES -->
+  <section class="services" id="services" data-shape="3" aria-labelledby="svc-t">
+    <div class="svc-head">
+      <div>
+        <p class="eyebrow mono">What I run</p>
+        <h2 class="st vw" id="svc-t">The whole funnel.</h2>
+      </div>
+      <p class="lede">Six disciplines, one strategy. Search brings people in, paid and social widen the top, and the operation behind it makes sure everything ships.</p>
+    </div>
+    <div class="htrack" id="htrack">
+      <article class="panel">
+        <p class="mono tag">SEO</p>
+        <h3>On-page, off-page and technical.</h3>
+        <p>Site architecture, internal linking, crawlability and indexing, schema in JSON-LD, local SEO. Run end to end for every account, not bolted on.</p>
+        <div class="viz">
+          <div class="serp"><small>yourbrand.com › services</small><strong>The page your buyers actually find</strong><span>Structured, internally linked and marked up so search engines understand what it is and who it is for.</span><b class="pos">#1</b></div>
+        </div>
+      </article>
+      <article class="panel">
+        <p class="mono tag">AI search · AEO · GEO</p>
+        <h3>Named in the answer, not buried below it.</h3>
+        <p>Entity optimization, AI Overviews, llms.txt, and reporting that tracks how a brand is mentioned and described in the engines people now ask first.</p>
+        <div class="viz engines" aria-label="AI engines tracked">
+          <div>ChatGPT<i data-bar></i><em>tracked</em></div>
+          <div>Gemini<i data-bar></i><em>tracked</em></div>
+          <div>Perplexity<i data-bar></i><em>tracked</em></div>
+          <div>Claude<i data-bar></i><em>tracked</em></div>
+          <div>Copilot<i data-bar></i><em>tracked</em></div>
+        </div>
+      </article>
+      <article class="panel">
+        <p class="mono tag">Paid media</p>
+        <h3>Google Ads and Meta Ads, end to end.</h3>
+        <p>Keyword and audience research, ad copy, bidding and reporting, with lead generation as the point and CPCs brought down steadily.</p>
+        <div class="viz roas"><b>2.5<span>:</span>1</b><p class="mono">Average ROAS. ₹1 in, ₹2.50 back.</p></div>
+      </article>
+      <article class="panel">
+        <p class="mono tag">Content &amp; social</p>
+        <h3>Calendars that tie every post to a goal.</h3>
+        <p>Editorial calendars, topical authority, LinkedIn thought leadership for executives, paid social on Meta, and email with A/B tests and segmentation.</p>
+        <div class="viz cal" aria-hidden="true">
+          <span>M</span><span class="a">Blog</span><span>W</span><span class="b">LI</span><span>F</span><span class="c">Mail</span><span>S</span>
+          <span class="b">LI</span><span>T</span><span class="a">Blog</span><span>T</span><span class="b">LI</span><span>S</span><span>S</span>
+          <span>M</span><span class="c">Mail</span><span class="b">LI</span><span>T</span><span class="a">Blog</span><span>S</span><span class="b">Ad</span>
+        </div>
+      </article>
+      <article class="panel">
+        <p class="mono tag">Operations</p>
+        <h3>The production line behind 300+ pages.</h3>
+        <p>Trackers and dashboards I built that move every page through each stage on time, with QC after publishing so nothing slips.</p>
+        <div class="viz pipe" aria-label="Production stages"><span>Content</span><i>→</i><span>Design</span><i>→</i><span>Development</span><i>→</i><span>Publishing</span><i>→</i><span>QC</span></div>
+      </article>
+      <article class="panel">
+        <p class="mono tag">Growth &amp; proposals</p>
+        <h3>Audits that turn into retainers.</h3>
+        <p>Live-crawl SEO and AI visibility audits that show a prospect where they stand, then tiered retainer proposals that show what it takes to move.</p>
+        <div class="viz tiers" aria-hidden="true"><div>Starter</div><div>Growth</div><div>Scale</div></div>
+      </article>
+    </div>
+  </section>
+
+  <!-- WORK: the portrait made of work -->
+  <section class="work-field" id="work" data-shape="4" aria-labelledby="work-t">
+    <div class="wf-pin">
+      <canvas id="wf" role="img" aria-label="Portrait of Harsh Nigam made of tiles of client work"></canvas>
+      <div class="wf-fade" aria-hidden="true"></div>
+      <div class="wf-copy">
+        <p class="eyebrow mono">Selected work</p>
+        <h2 class="st vw" id="work-t">My face, made of <span id="wfCount">728</span> pieces of work.</h2>
+        <p class="lede">Every tile is a real page my team shipped — websites, service pages, blogs and case studies for nine brands — plus the audits, reports and campaigns behind them. Hover a tile to see what it is, click to open it. Keep scrolling to fly through.</p>
+        <p class="hint mono"><i></i>Scroll</p>
+      </div>
+      <p class="wf-load mono" id="wfLoad">Loading work <b id="wfPct">0%</b></p>
+      <div class="wf-hud"><span class="mono" id="wfLabel"></span><span class="bar"><i id="wfBar"></i></span><button class="btn small" type="button" data-index="all" data-cursor="Browse">All <b id="wfPages">576</b> pages ↗</button></div>
+    </div>
+  </section>
+
+  <!-- CLIENTS -->
+  <section class="clients-sec" id="clients" data-shape="4" aria-labelledby="cl-t">
+    <div class="cl-head">
+      <div><p class="eyebrow mono">Clients</p><h2 class="st vw" id="cl-t">Nine brands. The whole engine.</h2></div>
+      <p class="lede">Strategy, SEO, AI search visibility, content, social, paid and reporting — owned end to end with my team at IInfotanks. Every page in the portrait links back to the live site.</p>
+    </div>
+    <div class="cl-grid">
+      <article class="cl"><span class="plate" style="--pb:#0b1f3a"><img src="logos/valintry360.png" alt="VALiNTRY360 logo" loading="lazy"></span><h3>VALiNTRY360</h3><p class="m mono">Salesforce consulting · US</p><p>Search, site architecture, content and LinkedIn thought leadership for a Salesforce consulting partner, with AI search visibility built into every page.</p><div class="chips"><span class="chip">SEO</span><span class="chip">AI search</span><span class="chip">Content</span><span class="chip">LinkedIn</span></div><div class="row"><button class="pill solid" type="button" data-index="valintry360" data-cursor="Browse">See <b data-count="valintry360"></b> pages</button><a class="pill" href="https://valintry360.com" target="_blank" rel="noopener" data-cursor="Open">valintry360.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#ffffff"><img src="logos/valintry.png" alt="VALiNTRY logo" loading="lazy"></span><h3>VALiNTRY</h3><p class="m mono">Staffing &amp; recruitment · US</p><p>Full-funnel marketing for a US staffing brand: SEO, state-by-state service pages, candidate-facing content, executive LinkedIn posts and monthly reporting.</p><div class="chips"><span class="chip">SEO</span><span class="chip">Content</span><span class="chip">Social</span><span class="chip">Reporting</span></div><div class="row"><button class="pill solid" type="button" data-index="valintry" data-cursor="Browse">See <b data-count="valintry"></b> pages</button><a class="pill" href="https://valintry.com" target="_blank" rel="noopener" data-cursor="Open">valintry.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#1b1719"><img src="logos/ignitehcm.png" alt="Ignite HCM logo" loading="lazy"></span><h3>Ignite HCM</h3><p class="m mono">Payroll &amp; HR consulting · US</p><p>SEO, off-page and content for an ADP payroll and HR consulting firm, tracked through a monthly performance report.</p><div class="chips"><span class="chip">SEO</span><span class="chip">Backlinks</span><span class="chip">Content</span><span class="chip">Reporting</span></div><div class="row"><button class="pill solid" type="button" data-index="ignitehcm" data-cursor="Browse">See <b data-count="ignitehcm"></b> pages</button><a class="pill" href="https://www.ignitehcm.com" target="_blank" rel="noopener" data-cursor="Open">ignitehcm.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#ffffff"><img src="logos/bullseye.png" alt="Bullseye Engagement logo" loading="lazy"></span><h3>Bullseye Engagement</h3><p class="m mono">Succession planning software · US</p><p>Content planning, skyscraper blogs, new service pages and monthly SEO reporting for a SaaS brand in talent and succession planning.</p><div class="chips"><span class="chip">Content</span><span class="chip">SEO</span><span class="chip">Reporting</span></div><div class="row"><button class="pill solid" type="button" data-index="bullseye" data-cursor="Browse">See <b data-count="bullseye"></b> pages</button><a class="pill" href="https://www.bullseyeengagement.com" target="_blank" rel="noopener" data-cursor="Open">bullseyeengagement.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#ffffff"><img src="logos/calance.png" alt="Calance logo" loading="lazy"></span><h3>Calance</h3><p class="m mono">IT services · US &amp; India</p><p>SEO, service-page builds with internal linking, SharePoint content, email campaigns and LLM visibility testing for a global IT services company.</p><div class="chips"><span class="chip">SEO</span><span class="chip">AI search</span><span class="chip">Content</span><span class="chip">Email</span></div><div class="row"><button class="pill solid" type="button" data-index="calance" data-cursor="Browse">See <b data-count="calance"></b> pages</button><a class="pill" href="https://www.calanceus.com" target="_blank" rel="noopener" data-cursor="Open">calanceus.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#0b2a4a"><img src="logos/prateek.png" alt="Prateek Group logo" loading="lazy"></span><h3>Prateek Group</h3><p class="m mono">Real estate · Delhi NCR</p><p>SEO, content, YouTube SEO and social for an NCR developer, plus AI sentiment and visibility reporting across five AI engines.</p><div class="chips"><span class="chip">SEO</span><span class="chip">AI visibility</span><span class="chip">YouTube</span><span class="chip">Content</span></div><div class="row"><button class="pill solid" type="button" data-index="prateek" data-cursor="Browse">See <b data-count="prateek"></b> pages</button><a class="pill" href="https://prateekgroup.com" target="_blank" rel="noopener" data-cursor="Open">prateekgroup.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#141414"><img src="logos/tag.png" alt="TAG Manufacturing logo" loading="lazy"></span><h3>TAG Manufacturing</h3><p class="m mono">Excavator attachments · Chattanooga, US</p><p>SEO and AI visibility for a US manufacturer of excavator attachments, from live-crawl audit to a 90-day growth program.</p><div class="chips"><span class="chip">SEO</span><span class="chip">AI search</span><span class="chip">Audit</span></div><div class="row"><button class="pill solid" type="button" data-index="tag" data-cursor="Browse">See <b data-count="tag"></b> pages</button><a class="pill" href="https://tagmfg.us" target="_blank" rel="noopener" data-cursor="Open">tagmfg.us ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#0a0f3d"><img src="logos/advayan.png" alt="Advayan logo" loading="lazy"></span><h3>Advayan</h3><p class="m mono">IT &amp; SAP consulting · US</p><p>SEO, AI visibility, service-page builds and a website revamp for an IT and SAP consulting firm.</p><div class="chips"><span class="chip">SEO</span><span class="chip">AI search</span><span class="chip">Web</span></div><div class="row"><button class="pill solid" type="button" data-index="advayan" data-cursor="Browse">See <b data-count="advayan"></b> pages</button><a class="pill" href="https://www.advayan.com" target="_blank" rel="noopener" data-cursor="Open">advayan.com ↗</a></div></article>
+      <article class="cl"><span class="plate" style="--pb:#1a1210"><img src="logos/zapfire.png" alt="ZAP FIRE logo" loading="lazy"></span><h3>ZAP FIRE</h3><p class="m mono">Fire safety · Gurugram</p><p>Content and SEO for a fire protection company, built around local search, a service page for every system, and project case studies.</p><div class="chips"><span class="chip">Content</span><span class="chip">SEO</span><span class="chip">Local</span></div><div class="row"><button class="pill solid" type="button" data-index="zapfire" data-cursor="Browse">See <b data-count="zapfire"></b> pages</button><a class="pill" href="https://zapfire.org" target="_blank" rel="noopener" data-cursor="Open">zapfire.org ↗</a></div></article>
+    </div>
+    <div class="cl-also">
+      <span class="plate"><img src="logos/iinfotanks.png" alt="IInfotanks logo" loading="lazy"></span>
+      <p><strong>Also:</strong> IInfotanks' own site — case studies, service pages and the programmatic pages my team ships — and a six-month SEO engagement for <strong>Sarvam AI</strong> that led to IInfotanks staffing their in-house marketing team.</p>
+      <button class="pill" type="button" data-index="iinfotanks" data-cursor="Browse">See <b data-count="iinfotanks"></b> pages</button>
+    </div>
+  </section>
+
+  <!-- CASE STUDIES -->
+  <section class="work" id="cases" data-shape="4" aria-labelledby="cases-t">
+    <p class="eyebrow mono">Case studies</p>
+    <h2 class="st vw" id="cases-t">Proof, in pages and pipelines.</h2>
+    <div class="cases">
+      <article class="case" style="--i:0">
+        <div class="copy">
+          <div class="meta mono"><span>Client SEO</span><span>Sarvam AI</span><span>Mar–Aug 2025</span></div>
+          <h3>Six months of SEO for a sovereign AI company.</h3>
+          <p>I ran a six-month SEO engagement for Sarvam AI, the Bengaluru company building India's own AI models. When it ended, they moved marketing in-house and asked IInfotanks to build that team.</p>
+          <div class="out"><span><b>In-house team</b> staffed by IInfotanks</span><span><b>Consulting</b> still ongoing</span></div>
+        </div>
+        <div class="art" aria-hidden="true">
+          <span class="lbl mono">Engagement</span>
+          <div class="months"><div>Mar</div><div>Apr</div><div>May</div><div>Jun</div><div>Jul</div><div>Aug</div></div>
+          <div class="after"><i></i><span>Retainer complete, client happy with the work</span><i></i><span>Marketing team staffed for them</span><i></i><span>Ongoing consulting relationship</span></div>
+        </div>
+      </article>
+      <article class="case" style="--i:1">
+        <div class="copy">
+          <div class="meta mono"><span>AI search</span><span>Reporting</span><span>2026</span></div>
+          <h3>What five AI engines say about a brand.</h3>
+          <p>Search rankings no longer tell the whole story. I built reporting that runs real buyer questions through ChatGPT, Gemini, Perplexity, Claude and Copilot and records whether the brand is named, how it is described, and which sources get cited.</p>
+          <div class="out"><span><b>5</b> engines tracked</span><span><b>Mentions, sentiment, citations</b></span></div>
+        </div>
+        <div class="art" aria-hidden="true">
+          <span class="lbl mono">Sample layout</span>
+          <div class="prompt">“best developers for a family home in NCR”</div>
+          <div class="mx">
+            <span class="h">Engine</span><span class="h">Named</span><span class="h">Tone</span><span class="h">Cited</span>
+            <span>ChatGPT</span><span><i class="dot y"></i></span><span><i class="dot y"></i></span><span><i class="dot p"></i></span>
+            <span>Gemini</span><span><i class="dot y"></i></span><span><i class="dot p"></i></span><span><i class="dot y"></i></span>
+            <span>Perplexity</span><span><i class="dot y"></i></span><span><i class="dot y"></i></span><span><i class="dot y"></i></span>
+            <span>Claude</span><span><i class="dot p"></i></span><span><i class="dot y"></i></span><span><i class="dot"></i></span>
+            <span>Copilot</span><span><i class="dot"></i></span><span><i class="dot"></i></span><span><i class="dot p"></i></span>
+          </div>
+        </div>
+      </article>
+      <article class="case" style="--i:2">
+        <div class="copy">
+          <div class="meta mono"><span>Business development</span><span>Audits → proposals</span></div>
+          <h3>60+ audits, each one a reason to say yes.</h3>
+          <p>Every proposal starts with a live crawl of the prospect's site and a check of how AI engines see them. The findings become tiered retainer plans, written for enterprise brands and growing businesses alike.</p>
+          <div class="out"><span><b>60+</b> proposals</span><span><b>14</b> industries</span><span><b>India, US</b> and beyond</span></div>
+        </div>
+        <div class="art" aria-hidden="true">
+          <span class="lbl mono">Method</span>
+          <div class="flow"><div><b>1</b>Live crawl</div><div><b>2</b>AI visibility</div><div><b>3</b>Tiered plan</div></div>
+          <div class="ind"><span>HVAC</span><span>Insurance</span><span>BFSI</span><span>Real estate</span><span>Healthcare</span><span>Legal</span><span>Manufacturing</span><span>Logistics</span><span>Renewables</span><span>Retail</span><span>Edtech</span><span>FMCG</span><span>SaaS</span><span>Staffing</span></div>
+        </div>
+      </article>
+      <article class="case" style="--i:3">
+        <div class="copy">
+          <div class="meta mono"><span>Operations</span><span>IInfotanks</span></div>
+          <h3>A production system that ships 300+ pages a month.</h3>
+          <p>Ten clients, twenty-one people, five specialisms. I built the trackers and dashboards that move every page from brief to live, then put QC after publishing so the team checks what users actually see.</p>
+          <div class="out"><span><b>300+</b> pages a month</span><span><b>On time</b>, every month</span></div>
+        </div>
+        <div class="art" aria-hidden="true">
+          <span class="lbl mono">Monthly flow</span>
+          <div class="lanes">
+            <div>Content<i data-bar style="width:100%"></i></div>
+            <div>Design<i data-bar style="width:88%"></i></div>
+            <div>Development<i data-bar style="width:80%"></i></div>
+            <div>Publishing<i data-bar style="width:74%"></i></div>
+            <div>QC<i data-bar style="width:70%"></i></div>
+          </div>
+        </div>
+      </article>
+    </div>
+  </section>
+
+  <!-- PATH -->
+  <section class="path" id="path" data-shape="5" aria-labelledby="path-t">
+    <p class="eyebrow mono">The path so far</p>
+    <h2 class="st vw" id="path-t">From intern to the strategy chair.</h2>
+    <div class="tl">
+      <div class="rail"><i id="rail"></i></div>
+      <div class="item now">
+        <span class="when mono">Jun 2026 – now</span>
+        <div><h3>Marketing Strategist<small>IInfotanks · Bengaluru</small></h3><p>Promoted to lead a 21-person team and own strategy for 10+ retained clients: SEO, AI search, paid media, social, reporting and new business.</p></div>
+      </div>
+      <div class="item">
+        <span class="when mono">Feb 2024 – May 2026</span>
+        <div><h3>Content Strategist (AI-Driven)<small>IInfotanks</small></h3><p>Shaped content strategy and editorial calendars across blogs, social, email and websites. Ran the Sarvam AI SEO engagement, executive LinkedIn programs and A/B-tested email campaigns.</p></div>
+      </div>
+      <div class="item">
+        <span class="when mono">2023</span>
+        <div><h3>Published &amp; certified<small>JETIR · Udemy</small></h3><p>Published “Zomato's IPO: A Brief Insight” in JETIR and completed The Complete Content Analyst Course.</p></div>
+      </div>
+      <div class="item">
+        <span class="when mono">Sep 2021 – Jun 2023</span>
+        <div><h3>Social Media Strategy · Financial Content<small>StockGro · Bengaluru</small></h3><p>Ran SEO, SEM and social campaigns, managed marketing budgets, and wrote research-backed content on markets and the economy.</p></div>
+      </div>
+      <div class="item">
+        <span class="when mono">2020 – 2023</span>
+        <div><h3>Bachelor of Management Studies<small>Jain University · 3.74 / 4</small></h3><p>Marketing and finance.</p></div>
+      </div>
+      <div class="item">
+        <span class="when mono">Jun – Aug 2020</span>
+        <div><h3>Digital Marketing Intern<small>Digital Ipsum · Singapore, remote</small></h3><p>First campaigns, first result: marketing initiatives that delivered 12% growth within a month.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- TOOLKIT -->
+  <section class="kit" data-shape="5" aria-labelledby="kit-t">
+    <p class="eyebrow mono">Toolkit</p>
+    <h2 class="st vw" id="kit-t">What's in the bag.</h2>
+    <div class="kit-grid">
+      <div><h4>SEO &amp; AI search</h4><p>On-page and off-page SEO, AI SEO, GEO, AEO, Google AI Overviews, local SEO</p></div>
+      <div><h4>Technical SEO</h4><p>Schema markup (JSON-LD), structured data, entity optimization, site architecture, internal linking, crawlability and indexing, llms.txt</p></div>
+      <div><h4>Content &amp; social</h4><p>Content strategy, topical authority, editorial calendars, LinkedIn thought leadership, social media, email marketing</p></div>
+      <div><h4>Paid &amp; performance</h4><p>Google Ads, Meta Ads, PPC/SEM, ROAS and CPC optimization, lead generation, A/B testing</p></div>
+      <div><h4>Analytics &amp; reporting</h4><p>GA4, Google Search Console, AI visibility and citation tracking, rank tracking, KPI dashboards, SQL, Tableau</p></div>
+      <div><h4>Leadership &amp; AI ops</h4><p>Team leadership, client and stakeholder management, workflow automation in Apps Script, ChatGPT, Claude, Gemini, advanced Excel</p></div>
+    </div>
+  </section>
+
+  <!-- RESUME -->
+  <section class="resume" id="resume" data-shape="5" aria-labelledby="rs-t">
+    <p class="eyebrow mono">Resume</p>
+    <h2 class="st vw" id="rs-t">The one-page version.</h2>
+    <div class="rs">
+      <a class="rs-doc" href="resume/Harsh_Nigam_Resume_2026.pdf" target="_blank" rel="noopener" data-cursor="Open"><img src="resume/preview.webp" alt="First page of Harsh Nigam's resume" loading="lazy" width="910" height="1287"></a>
+      <div class="copy">
+        <div class="rs-meta mono"><span>PDF</span><span>1 page</span><span>40 KB</span><span>Updated Nov 2026</span></div>
+        <h3>Marketing Strategist · SEO, AI Search, Paid Ads &amp; Social Media</h3>
+        <p>Experience, results, skills and education on a single page. Download it, open it in your browser, or pull it as structured data straight from GitHub.</p>
+        <div class="acts">
+          <a class="btn solid magnet" href="resume/Harsh_Nigam_Resume_2026.pdf" download="Harsh_Nigam_Resume_2026.pdf" data-cursor="Get"><span class="k">PDF</span>Download resume ↓</a>
+          <a class="btn magnet" href="resume/Harsh_Nigam_Resume_2026.pdf" target="_blank" rel="noopener" data-cursor="Open"><span class="k">View</span>Open in browser ↗</a>
+        </div>
+        <div class="api">
+          <p>Hosted on GitHub, so it's always one request away — the same resume as JSON (JSON Resume schema) or the PDF itself.</p>
+          <div class="ep"><span class="tag">GET</span><code id="ep1">https://harshnigam788-ui.github.io/portfolio/resume/resume.json</code><button class="pill" type="button" data-copy="ep1">Copy</button></div>
+          <div class="ep"><span class="tag">GET</span><code id="ep2">https://raw.githubusercontent.com/harshnigam788-ui/portfolio/main/resume/Harsh_Nigam_Resume_2026.pdf</code><button class="pill" type="button" data-copy="ep2">Copy</button></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="contact" id="contact" data-shape="6" aria-labelledby="ct-t">
+    <p class="eyebrow mono">Next query</p>
+    <h2 class="st vw" id="ct-t">Let's get you <em>cited.</em></h2>
+    <p class="lede">Rankings, AI answers, paid, social, or the whole funnel. If you want your brand in the answer, reach me directly — I usually reply within a day.</p>
+    <div class="cdetails">
+      <button class="cd hl" id="copyMail" type="button" data-cursor="Copy"><span class="k mono">Email</span><b id="mail">harshnigam788@gmail.com</b><small>Click to copy</small></button>
+      <a class="cd" href="tel:+919928256987" data-cursor="Call"><span class="k mono">Phone</span><b>+91 99282 56987</b><small>Call me</small></a>
+      <a class="cd" href="https://www.linkedin.com/in/harshnigam15" target="_blank" rel="noopener" data-cursor="Open"><span class="k mono">LinkedIn</span><b>in/harshnigam15</b><small>Connect ↗</small></a>
+      <a class="cd" href="resume/Harsh_Nigam_Resume_2026.pdf" download="Harsh_Nigam_Resume_2026.pdf" data-cursor="Get"><span class="k mono">Resume</span><b>PDF · 1 page</b><small>Download ↓</small></a>
+    </div>
+    <div class="reach"><a class="btn solid magnet" href="mailto:harshnigam788@gmail.com?subject=Hello%20Harsh" data-cursor="Write"><span class="k">Email</span>Write to me</a></div>
+    <p class="avail mono"><i></i>Bengaluru, India · <span id="clock2">--:--</span> IST · Replies within a day</p>
+    <div class="engines-row mono" aria-label="Engines I optimize for"><span>Google</span><span>ChatGPT</span><span>Gemini</span><span>Perplexity</span><span>Claude</span><span>Copilot</span></div>
+  </section>
+
 </main>
 
-<div class="hud" id="hud" aria-hidden="true">
-  <span id="hudLabel">Scroll, drag or swipe to fly</span>
-  <span class="bar"><i id="progress"></i></span>
-</div>
-
-<div class="tip" id="tip" role="status" aria-live="polite"></div>
+<footer>
+  <span>© 2026 Harsh Nigam · Bengaluru</span>
+  <span class="mono"><a href="resume/Harsh_Nigam_Resume_2026.pdf" download>Resume (PDF)</a> · <a href="resume/resume.json">resume.json</a> · This page ships Person schema. Of course it does.</span>
+</footer>
 <div class="scrim" id="scrim" data-close></div>
+<div class="tip" id="tip" role="status" aria-live="polite"></div>
 
-<!-- LIGHTBOX -->
-<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lbTitle" aria-hidden="true">
-  <div class="lb-media"><img id="lbImg" alt=""><div class="lb-spin"></div></div>
-  <div class="lb-info">
-    <div class="lb-top"><span class="lb-logo" id="lbLogo"></span><button class="close" data-lbclose aria-label="Close preview">Close</button></div>
-    <p class="lb-kicker"><span id="lbClient"></span> · <span id="lbType"></span></p>
-    <h3 id="lbTitle"></h3>
-    <p class="lb-url" id="lbUrl"></p>
-    <a class="btn btn-solid" id="lbLink" target="_blank" rel="noopener">Open the live page ↗</a>
-    <div class="lb-nav"><button class="btn" id="lbPrev" aria-label="Previous">← Prev</button><span id="lbPos"></span><button class="btn" id="lbNext" aria-label="Next">Next →</button></div>
-  </div>
-</div>
-
-<!-- WORK -->
-<aside class="panel" id="panel-work" aria-labelledby="work-title" aria-hidden="true">
-  <div class="panel-head"><span class="kicker">Selected work</span><button class="close" data-close aria-label="Close">Close</button></div>
-  <div class="panel-body">
-    <h2 id="work-title">Nine brands where I've run the <em>whole</em> marketing engine.</h2>
-    <p class="intro">Strategy, SEO, AI search visibility, content, social, paid and reporting — owned end to end with my team at IInfotanks. Every page in the field links back to the live site.</p>
-    <ol class="clients">
-      <li id="c-valintry360"><span class="plate" style="--pb:#0b1f3a"><img src="logos/valintry360.png" alt="VALiNTRY360 logo" loading="lazy"></span><div><h3>VALiNTRY360</h3><p class="meta">Salesforce consulting · US</p><p>Search, site architecture, content and LinkedIn thought leadership for a Salesforce consulting partner, with AI search visibility built into every page.</p><ul class="chips"><li>SEO</li><li>AI search</li><li>Content</li><li>LinkedIn</li></ul><div class="row"><button class="btn sm" data-index="valintry360">See <b data-count="valintry360"></b> pages</button><a class="btn sm ghost" href="https://valintry360.com" target="_blank" rel="noopener">valintry360.com ↗</a></div></div></li>
-      <li id="c-valintry"><span class="plate" style="--pb:#ffffff"><img src="logos/valintry.png" alt="VALiNTRY logo" loading="lazy"></span><div><h3>VALiNTRY</h3><p class="meta">Staffing &amp; recruitment · US</p><p>Full-funnel marketing for a US staffing brand: SEO, state-by-state service pages, candidate-facing content, executive LinkedIn posts and monthly reporting.</p><ul class="chips"><li>SEO</li><li>Content</li><li>Social</li><li>Reporting</li></ul><div class="row"><button class="btn sm" data-index="valintry">See <b data-count="valintry"></b> pages</button><a class="btn sm ghost" href="https://valintry.com" target="_blank" rel="noopener">valintry.com ↗</a></div></div></li>
-      <li id="c-ignitehcm"><span class="plate" style="--pb:#1b1719"><img src="logos/ignitehcm.png" alt="Ignite HCM logo" loading="lazy"></span><div><h3>Ignite HCM</h3><p class="meta">Payroll &amp; HR consulting · US</p><p>SEO, off-page and content for an ADP payroll and HR consulting firm, tracked through a monthly performance report.</p><ul class="chips"><li>SEO</li><li>Backlinks</li><li>Content</li><li>Reporting</li></ul><div class="row"><button class="btn sm" data-index="ignitehcm">See <b data-count="ignitehcm"></b> pages</button><a class="btn sm ghost" href="https://www.ignitehcm.com" target="_blank" rel="noopener">ignitehcm.com ↗</a></div></div></li>
-      <li id="c-bullseye"><span class="plate" style="--pb:#ffffff"><img src="logos/bullseye.png" alt="Bullseye Engagement logo" loading="lazy"></span><div><h3>Bullseye Engagement</h3><p class="meta">Succession planning software · US</p><p>Content planning, skyscraper blogs, new service pages and monthly SEO reporting for a SaaS brand in talent and succession planning.</p><ul class="chips"><li>Content</li><li>SEO</li><li>Reporting</li></ul><div class="row"><button class="btn sm" data-index="bullseye">See <b data-count="bullseye"></b> pages</button><a class="btn sm ghost" href="https://www.bullseyeengagement.com" target="_blank" rel="noopener">bullseyeengagement.com ↗</a></div></div></li>
-      <li id="c-calance"><span class="plate" style="--pb:#ffffff"><img src="logos/calance.png" alt="Calance logo" loading="lazy"></span><div><h3>Calance</h3><p class="meta">IT services · US &amp; India</p><p>SEO, service-page builds with internal linking, SharePoint content, email campaigns and LLM visibility testing for a global IT services company.</p><ul class="chips"><li>SEO</li><li>AI search</li><li>Content</li><li>Email</li></ul><div class="row"><button class="btn sm" data-index="calance">See <b data-count="calance"></b> pages</button><a class="btn sm ghost" href="https://www.calanceus.com" target="_blank" rel="noopener">calanceus.com ↗</a></div></div></li>
-      <li id="c-prateek"><span class="plate" style="--pb:#0b2a4a"><img src="logos/prateek.png" alt="Prateek Group logo" loading="lazy"></span><div><h3>Prateek Group</h3><p class="meta">Real estate · Delhi NCR</p><p>SEO, content, YouTube SEO and social for an NCR developer, plus AI sentiment and visibility reporting across ChatGPT, Gemini, Perplexity, Claude and Copilot.</p><ul class="chips"><li>SEO</li><li>AI visibility</li><li>YouTube</li><li>Content</li></ul><div class="row"><button class="btn sm" data-index="prateek">See <b data-count="prateek"></b> pages</button><a class="btn sm ghost" href="https://prateekgroup.com" target="_blank" rel="noopener">prateekgroup.com ↗</a></div></div></li>
-      <li id="c-tag"><span class="plate" style="--pb:#141414"><img src="logos/tag.png" alt="TAG Manufacturing logo" loading="lazy"></span><div><h3>TAG Manufacturing</h3><p class="meta">Excavator attachments · Chattanooga, US</p><p>SEO and AI visibility for a US manufacturer of excavator attachments, from live-crawl audit to a 90-day growth program.</p><ul class="chips"><li>SEO</li><li>AI search</li><li>Audit</li></ul><div class="row"><button class="btn sm" data-index="tag">See <b data-count="tag"></b> pages</button><a class="btn sm ghost" href="https://tagmfg.us" target="_blank" rel="noopener">tagmfg.us ↗</a></div></div></li>
-      <li id="c-advayan"><span class="plate" style="--pb:#0a0f3d"><img src="logos/advayan.png" alt="Advayan logo" loading="lazy"></span><div><h3>Advayan</h3><p class="meta">IT &amp; SAP consulting · US</p><p>SEO, AI visibility, service-page builds and a website revamp for an IT and SAP consulting firm.</p><ul class="chips"><li>SEO</li><li>AI search</li><li>Web</li></ul><div class="row"><button class="btn sm" data-index="advayan">See <b data-count="advayan"></b> pages</button><a class="btn sm ghost" href="https://www.advayan.com" target="_blank" rel="noopener">advayan.com ↗</a></div></div></li>
-      <li id="c-zapfire"><span class="plate" style="--pb:#1a1210"><img src="logos/zapfire.png" alt="ZAP FIRE logo" loading="lazy"></span><div><h3>ZAP FIRE</h3><p class="meta">Fire safety · Gurugram</p><p>Content and SEO for a fire protection company, built around local search, service pages for every system, and project case studies.</p><ul class="chips"><li>Content</li><li>SEO</li><li>Local</li></ul><div class="row"><button class="btn sm" data-index="zapfire">See <b data-count="zapfire"></b> pages</button><a class="btn sm ghost" href="https://zapfire.org" target="_blank" rel="noopener">zapfire.org ↗</a></div></div></li>
-    </ol>
-    <div class="also">
-      <span class="plate small" style="--pb:#ffffff"><img src="logos/iinfotanks.png" alt="IInfotanks logo" loading="lazy"></span>
-      <h3>Also</h3>
-      <p>IInfotanks' own site — case studies, service pages and hundreds of programmatic pages my team ships (<button class="linkish" data-index="iinfotanks">see <b data-count="iinfotanks"></b> pages</button>). A six-month SEO engagement for <strong>Sarvam AI</strong> (Mar–Aug 2025) that led to IInfotanks staffing their in-house marketing team. And 60+ live-crawl audits and tiered retainer proposals across HVAC, insurance, BFSI, real estate, healthcare, legal, manufacturing, logistics, renewables, retail, edtech, FMCG and SaaS.</p>
-    </div>
-    <button class="btn btn-solid wide" data-open="contact">Start a project</button>
-  </div>
-</aside>
-
-<!-- INDEX -->
-<aside class="panel panel-wide" id="panel-index" aria-labelledby="index-title" aria-hidden="true">
-  <div class="panel-head"><span class="kicker">Index · <span id="idxCount"></span></span><button class="close" data-close aria-label="Close">Close</button></div>
-  <div class="panel-body">
-    <h2 id="index-title">Every page in the <em>field</em>.</h2>
+<aside class="drawer" id="drawer" aria-labelledby="idx-t" aria-hidden="true">
+  <div class="drawer-head"><span class="mono" id="idxCount"></span><button class="x" type="button" data-close>Close</button></div>
+  <div class="drawer-body">
+    <h2 id="idx-t">Every page in the portrait.</h2>
     <div class="filters" id="fClient" role="group" aria-label="Filter by client"></div>
     <div class="filters" id="fType" role="group" aria-label="Filter by page type"></div>
     <div class="grid" id="grid"></div>
   </div>
 </aside>
 
-<!-- ABOUT -->
-<aside class="panel" id="panel-about" aria-labelledby="about-title" aria-hidden="true">
-  <div class="panel-head"><span class="kicker">About</span><button class="close" data-close aria-label="Close">Close</button></div>
-  <div class="panel-body">
-    <h2 id="about-title">Content should be strategic, engaging and <em>fun</em>. It also has to rank.</h2>
-    <p class="intro">I'm a Marketing Strategist at IInfotanks, an AI-powered agency in Bengaluru, where I lead a 21-person team of writers, designers, developers, QC and off-page specialists. I look after SEO, AI search (AEO/GEO), Google and Meta Ads and social media for 10+ clients in India and the US — and my job is to make the numbers move.</p>
-    <dl class="stats">
-      <div style="--c:#ff5a1f"><dt>21</dt><dd>People on my team</dd></div>
-      <div style="--c:#2f5bff"><dt>10+</dt><dd>Retained clients, India &amp; US</dd></div>
-      <div style="--c:#c6f432"><dt>300+</dt><dd>Webpages shipped a month</dd></div>
-      <div style="--c:#ff4fa3"><dt>5–10%</dt><dd>Monthly traffic growth</dd></div>
-      <div style="--c:#12c2a5"><dt>10–15%</dt><dd>More leads every quarter</dd></div>
-      <div style="--c:#ffd23f"><dt>2.5:1</dt><dd>Average ROAS on paid</dd></div>
-    </dl>
-    <h3 class="sec">Experience</h3>
-    <ol class="timeline">
-      <li><span class="when">Jun 2026 — now</span><div><h4>Marketing Strategist · IInfotanks</h4><p>Lead the team and run search end to end for every account: on-page, off-page, technical and AI search visibility. Manage Google and Meta Ads, social, and the production system that moves every page from content to design, development, publishing and QC on time. Built AI visibility reporting across ChatGPT, Gemini, Perplexity, Claude and Copilot.</p></div></li>
-      <li><span class="when">Feb 2024 — May 2026</span><div><h4>Content Strategist (AI-Driven) · IInfotanks</h4><p>Shaped content strategy and editorial calendars across blogs, social, email and websites. Ran email campaigns with A/B testing and segmentation, and led the Sarvam AI SEO engagement.</p></div></li>
-      <li><span class="when">Sep 2021 — Jun 2023</span><div><h4>Social Media Strategy &amp; Financial Content Intern · StockGro</h4><p>SEO, SEM and social campaigns, marketing budgets, and research-backed financial content.</p></div></li>
-      <li><span class="when">Jun — Aug 2020</span><div><h4>Digital Marketing Intern · Digital Ipsum, Singapore</h4><p>Marketing initiatives that delivered 12% growth within a month.</p></div></li>
-    </ol>
-    <h3 class="sec">What I work with</h3>
-    <div class="skills">
-      <div><h4>SEO &amp; AI search</h4><p>On-page &amp; off-page SEO, GEO, AEO, Google AI Overviews, local SEO</p></div>
-      <div><h4>Technical SEO</h4><p>JSON-LD schema, entity optimization, site architecture, internal linking, crawlability, llms.txt</p></div>
-      <div><h4>Paid &amp; performance</h4><p>Google Ads, Meta Ads, ROAS &amp; CPC optimization, lead generation, A/B testing</p></div>
-      <div><h4>Content &amp; social</h4><p>Content strategy, topical authority, editorial calendars, LinkedIn thought leadership, email</p></div>
-      <div><h4>Analytics</h4><p>GA4, Search Console, AI citation tracking, rank tracking, KPI dashboards, SQL, Tableau</p></div>
-      <div><h4>Leadership &amp; ops</h4><p>Team leadership, stakeholder management, Apps Script automation, ChatGPT, Claude, Gemini</p></div>
-    </div>
-    <h3 class="sec">Education</h3>
-    <p class="plain">Bachelor of Management Studies (Marketing &amp; Finance), Jain University — 3.74/4, 2020–2023.<br>Published <em>Zomato's IPO: A Brief Insight</em>, JETIR, 2023 · The Complete Content Analyst Course, Udemy, 2023.</p>
-    <div class="links"><a href="https://www.linkedin.com/in/harshnigam15" target="_blank" rel="noopener">LinkedIn ↗</a><a href="#" class="js-mail">Email ↗</a></div>
+<div class="lightbox" id="lightbox" role="dialog" aria-modal="true" aria-labelledby="lbTitle" aria-hidden="true">
+  <div class="lb-media"><img id="lbImg" alt=""><div class="lb-spin"></div></div>
+  <div class="lb-info">
+    <div class="lb-top"><span class="lb-logo" id="lbLogo"></span><button class="x" type="button" data-lbclose>Close</button></div>
+    <p class="lb-kicker mono"><span id="lbClient"></span> · <span id="lbType"></span></p>
+    <h3 id="lbTitle"></h3>
+    <p class="lb-url" id="lbUrl"></p>
+    <a class="btn solid" id="lbLink" target="_blank" rel="noopener">Open the live page ↗</a>
+    <div class="lb-nav mono"><button class="x" id="lbPrev" type="button">← Prev</button><span id="lbPos"></span><button class="x" id="lbNext" type="button">Next →</button></div>
   </div>
-</aside>
+</div>
 
-<!-- CONTACT -->
-<aside class="panel" id="panel-contact" aria-labelledby="contact-title" aria-hidden="true">
-  <div class="panel-head"><span class="kicker">Contact</span><button class="close" data-close aria-label="Close">Close</button></div>
-  <div class="panel-body">
-    <h2 id="contact-title">Let's make your numbers <em>move</em>.</h2>
-    <p class="intro">Tell me a little about the brand and what you need. I usually reply within a day.</p>
-    <form class="cform" id="cform" novalidate>
-      <label><span>Name</span><input name="name" autocomplete="name" required></label>
-      <label><span>Email</span><input name="email" type="email" autocomplete="email" required></label>
-      <label class="full"><span>Company or website</span><input name="company" autocomplete="organization"></label>
-      <fieldset class="full"><legend>What do you need?</legend>
-        <div class="opts">
-          <label><input type="checkbox" name="need" value="SEO &amp; AI search"><span>SEO &amp; AI search</span></label>
-          <label><input type="checkbox" name="need" value="Paid media"><span>Paid media</span></label>
-          <label><input type="checkbox" name="need" value="Social media"><span>Social media</span></label>
-          <label><input type="checkbox" name="need" value="Content"><span>Content</span></label>
-          <label><input type="checkbox" name="need" value="Full-funnel marketing"><span>Full-funnel marketing</span></label>
-          <label><input type="checkbox" name="need" value="Audit or consulting"><span>Audit or consulting</span></label>
-        </div>
-      </fieldset>
-      <label class="full"><span>Project details</span><textarea name="message" rows="4" required></textarea></label>
-      <button class="btn btn-solid wide" type="submit">Send enquiry</button>
-      <p class="status" id="cstatus" aria-live="polite"></p>
-    </form>
-    <p class="direct">Prefer email? Write to <a href="#" class="js-mail js-mail-text">me</a> or <button type="button" class="linkish" id="copymail">copy my address</button>.</p>
-  </div>
-</aside>
-
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+<script src="https://unpkg.com/lenis@1.1.13/dist/lenis.min.js"></script>
 <script type="importmap">{ "imports": { "three": "./vendor/three.module.min.js" } }</script>
 <script type="module" src="app.js"></script>
 </body>
