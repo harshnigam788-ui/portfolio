@@ -340,7 +340,6 @@ const TOOLS = [
 const [TD, MD] = await Promise.all([fetch('data/tiles.json').then(r => r.json()), fetch('data/mosaic.json').then(r => r.json())]);
 const tiles = TD.tiles, NAMES = TD.names;
 const pages = tiles.filter(t => t.url).map(t => t.i);
-document.getElementById('wfCount').textContent = tiles.length;
 document.getElementById('wfPages').textContent = pages.length;
 document.querySelectorAll('[data-count]').forEach(el => { el.textContent = TD.counts[el.dataset.count] || 0; });
 document.getElementById('idxCount').textContent = `${pages.length} pages · ${tiles.length} tiles`;

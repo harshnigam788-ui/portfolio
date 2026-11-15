@@ -7,6 +7,7 @@
 - JSON (JSON Resume schema): https://harshnigam788-ui.github.io/portfolio/resume/resume.json
 
 ## Focus
+- Marketing strategy, go-to-market (GTM) strategy and account-based marketing (ABM)
 - SEO and AI search visibility: on-page, off-page, technical SEO, schema (JSON-LD), entity optimization, llms.txt, AI citation tracking across ChatGPT, Gemini, Perplexity, Claude and Copilot
 - Paid media: Google Ads and Meta Ads, averaging 2.5:1 ROAS
 - Content and social: content strategy, editorial calendars, LinkedIn thought leadership, email
