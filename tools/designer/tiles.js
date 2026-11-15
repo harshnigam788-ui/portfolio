@@ -83,7 +83,7 @@ export const P = {
     ctx.beginPath(); ctx.arc(TW - 40, 40, 6, 0, 7); fill(ctx, C.signal);
     const f = fit(ctx, d.c.name, TW - 64, 74, SERIF);
     text(ctx, d.c.name, 32, 190, `${f}px ${SERIF}`, ink);
-    text(ctx, `${d.c.sector} — ${d.c.region}`, 32, 232, `400 18px ${SANS}`, dark ? C.mute : C.pmute);
+    text(ctx, `${d.c.sector} · ${d.c.region}`, 32, 232, `400 18px ${SANS}`, dark ? C.mute : C.pmute);
     let x = 32; for (const s of d.c.chips) x += chip(ctx, s, x, 316, dark) + 8;
   },
   metric(ctx, d) {

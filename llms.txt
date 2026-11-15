@@ -11,6 +11,9 @@
 - Paid media: Google Ads and Meta Ads, averaging 2.5:1 ROAS
 - Content and social: content strategy, editorial calendars, LinkedIn thought leadership, email
 
+## Tools
+Claude, ChatGPT, Gemini, Perplexity, Copilot, n8n, Zapier, Make, Google Apps Script, Google Sheets, Google Ads, Meta Ads, LinkedIn, YouTube, GA4, Google Search Console, Semrush
+
 ## Clients (full marketing)
 VALiNTRY360 (valintry360.com), VALiNTRY (valintry.com), Ignite HCM (ignitehcm.com), Bullseye Engagement (bullseyeengagement.com), Calance (calanceus.com), Prateek Group (prateekgroup.com), TAG Manufacturing (tagmfg.us), Advayan (advayan.com), ZAP FIRE (zapfire.org)
 

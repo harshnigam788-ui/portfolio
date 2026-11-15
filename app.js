@@ -14,6 +14,18 @@ const TYPES = ['Homepage', 'Service page', 'Case study', 'Blog', 'Brand page'];
 const pad4 = n => String(n).padStart(4, '0');
 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
 const wfSec = document.getElementById('archive');
+const onScreen = (el, cb, margin = '0px') => new IntersectionObserver(es => es.forEach(e => cb(e.isIntersecting)), { rootMargin: margin }).observe(el);
+
+/* ================================================================ colour themes per section */
+(() => {
+  const meta = document.querySelector('meta[name="theme-color"]');
+  const HEX = { cream: '#FFF3E3', sun: '#FFD23F', grape: '#6B3BF5', pink: '#FF9ECF', night: '#150E22', lime: '#C9F24A', cobalt: '#2747FF', tang: '#FF5A1F' };
+  const io = new IntersectionObserver(es => es.forEach(e => {
+    if (!e.isIntersecting) return;
+    const t = e.target.dataset.theme; root.dataset.theme = t; meta.content = HEX[t] || HEX.cream;
+  }), { rootMargin: '-49% 0px -50% 0px' });
+  document.querySelectorAll('section[data-theme]').forEach(s => io.observe(s));
+})();
 
 /* ================================================================ clock, toast, copy */
 const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
@@ -22,7 +34,7 @@ tick(); setInterval(tick, 15000);
 const toast = document.getElementById('toast'); let tt;
 function say(m) { toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400); }
 async function copyText(text, label) {
-  try { await navigator.clipboard.writeText(text); say(`${label} copied — ${text}`); }
+  try { await navigator.clipboard.writeText(text); say(`${label} copied: ${text}`); }
   catch { say(`${label}: ${text}`); }
 }
 document.getElementById('copyMail').addEventListener('click', () => copyText(MAIL, 'Email'));
@@ -43,6 +55,10 @@ function goTo(target) {
   if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.6 });
   else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
 }
+function jumpTo(y) {
+  if (lenis) lenis.scrollTo(y, { immediate: true, force: true });
+  else window.scrollTo(0, y);
+}
 document.querySelectorAll('[data-scroll]').forEach(a => a.addEventListener('click', ev => {
   const target = document.querySelector(a.getAttribute('href')); if (!target) return;
   ev.preventDefault(); goTo(target);
@@ -62,10 +78,12 @@ if (fine && !reduce) {
 }
 
 /* ================================================================ hero + statement + reveals */
+document.querySelectorAll('.hero-name .rv').forEach(rv => { rv.innerHTML = [...rv.textContent].map(c => `<span class="ch">${c}</span>`).join(''); });
 if (hasGsap && !reduce) {
   gsap.from('.hero-name .rv', { yPercent: 105, duration: 1.4, ease: 'expo.out', stagger: 0.12, delay: 0.1 });
-  gsap.from('.hero-fig', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'expo.inOut', delay: 0.25 });
-  gsap.from('.hero-fig img', { scale: 1.25, duration: 1.8, ease: 'expo.out', delay: 0.25 });
+  gsap.fromTo('.hero-fig', { clipPath: 'inset(100% -60% -60% -60%)' }, { clipPath: 'inset(0% -60% -60% -60%)', duration: 1.4, ease: 'expo.inOut', delay: 0.25, clearProps: 'clipPath' });
+  gsap.from('.hero-photo img', { scale: 1.25, duration: 1.8, ease: 'expo.out', delay: 0.25 });
+  gsap.from('.sticker', { scale: 0, rotate: -120, duration: 1.2, ease: 'back.out(2)', delay: 1.1 });
   gsap.from('.hero-corners p, .hero-fig figcaption', { y: 16, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.08, delay: 0.9 });
   gsap.to('.hn-l', { xPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
   gsap.to('.hn-r', { xPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
@@ -88,12 +106,235 @@ if (hasGsap && !reduce) {
   ScrollTrigger.create({ trigger: big, start: 'top 82%', end: 'bottom 45%', scrub: true,
     onUpdate: s => { const n = Math.round(s.progress * words.length); words.forEach((w, i) => w.classList.toggle('on', i < n)); } });
 })();
-const revealEls = document.querySelectorAll('.sec-head > *, .row, .svc li, .nums > div, .note, .ab-story p, .path li, .kit, .rs-row > *, .ct-grid a, .facts > div, .mail, .huge, .contact .label');
+const revealEls = document.querySelectorAll('.sec-head > *, .row, .svc li, .nums > div, .ab-story p, .ab-side h3, .rs-side, .mail, .huge, .contact .label, .tk-tabs, .ct-next');
 if (!reduce && 'IntersectionObserver' in window) {
   revealEls.forEach(el => el.classList.add('reveal'));
   const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
   revealEls.forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 60}ms`; io.observe(el); });
 }
+
+/* ================================================================ TOOLKIT: logos you can throw */
+const TOOLS = [
+  { id: 'claude', name: 'Claude', cat: 'AI', lvl: 5, tag: 'Daily driver', use: 'Audits, long briefs, proposal decks and the code behind my trackers. It helped build this site, too.' },
+  { id: 'chatgpt', name: 'ChatGPT', cat: 'AI', lvl: 5, tag: 'Daily driver', use: 'Research, first drafts and content ideas. Also one of the five engines I test every month for AI visibility.' },
+  { id: 'gemini', name: 'Gemini', cat: 'AI', lvl: 4, tag: 'Power user', use: 'Research inside Google Workspace, and a key engine in monthly AI visibility checks.' },
+  { id: 'perplexity', name: 'Perplexity', cat: 'AI', lvl: 4, tag: 'Power user', use: 'Fast, cited research, and a good read on which sources AI search trusts for a brand.' },
+  { id: 'copilot', name: 'Copilot', cat: 'AI', lvl: 3, tag: 'Regular', use: 'The fifth engine in AI visibility reporting. For B2B buyers, what Microsoft says matters.' },
+  { id: 'n8n', name: 'n8n', cat: 'Automation', lvl: 4, tag: 'Builds workflows', use: 'Multi-step automations that move data between crawls, sheets and reports without anyone copy-pasting.' },
+  { id: 'zapier', name: 'Zapier', cat: 'Automation', lvl: 4, tag: 'Builds workflows', use: 'Quick glue between forms, CRMs and chat, so a lead never sits in an inbox.' },
+  { id: 'make', name: 'Make', cat: 'Automation', lvl: 4, tag: 'Builds workflows', use: 'Visual scenarios for content ops and reporting pipelines, with branches when things get messy.' },
+  { id: 'appsscript', name: 'Apps Script', cat: 'Automation', lvl: 4, tag: 'Writes it', use: 'Custom functions and triggers that turn Google Sheets into trackers and dashboards.' },
+  { id: 'sheets', name: 'Google Sheets', cat: 'Automation', lvl: 5, tag: 'Lives here', use: 'Production trackers, rank trackers, keyword maps. If it moves, it gets a sheet.' },
+  { id: 'googleads', name: 'Google Ads', cat: 'Ads & social', lvl: 4, tag: 'Runs campaigns', use: 'Search campaigns built around intent, with CPCs that go down instead of up.' },
+  { id: 'meta', name: 'Meta Ads', cat: 'Ads & social', lvl: 4, tag: 'Runs campaigns', use: 'Paid social for awareness and leads, tested creative by creative.' },
+  { id: 'linkedin', name: 'LinkedIn', cat: 'Ads & social', lvl: 4, tag: 'Grows pages', use: 'Founder-led content and company pages for B2B brands.' },
+  { id: 'youtube', name: 'YouTube', cat: 'Ads & social', lvl: 3, tag: 'Optimises channels', use: 'Titles, descriptions, playlists and channel structure, handled in bulk.' },
+  { id: 'ga4', name: 'GA4', cat: 'Search & data', lvl: 5, tag: 'Reads it daily', use: 'Traffic, conversions and the story behind both, every month for every client.' },
+  { id: 'gsc', name: 'Search Console', cat: 'Search & data', lvl: 5, tag: 'Reads it daily', use: 'Indexing, queries, and the first place I look when rankings move.' },
+  { id: 'semrush', name: 'Semrush', cat: 'Search & data', lvl: 5, tag: 'Daily driver', use: 'Keyword research, competitor gaps, site audits and backlink checks.' },
+];
+(() => {
+  const sec = document.getElementById('toolkit'), pit = document.getElementById('tkPit'), card = document.getElementById('tkCard'), tabs = document.getElementById('tkTabs');
+  pit.innerHTML = TOOLS.map((t, i) => `<button type="button" class="chip" data-i="${i}" aria-label="${esc(t.name)}: details"><span class="ic"><img src="icons/${t.id}.svg" alt="" width="40" height="40" draggable="false"></span>${esc(t.name)}</button>`).join('');
+  const chips = [...pit.children];
+  let cat = 'all', bodies = null;
+  function show(i) {
+    const t = TOOLS[i];
+    chips.forEach((c, j) => c.classList.toggle('sel', j === i));
+    card.innerHTML = `<div class="tk-top"><span class="ic"><img src="icons/${t.id}.svg" alt=""></span><div><h3>${esc(t.name)}</h3><p class="mono">${esc(t.cat)}</p></div></div>
+      <div class="tk-level" aria-label="Level ${t.lvl} of 5"><div class="bars">${[1, 2, 3, 4, 5].map(n => `<i class="${n <= t.lvl ? 'on' : ''}"></i>`).join('')}</div><b>${esc(t.tag)}</b></div>
+      <p class="tk-use">${esc(t.use)}</p>
+      <p class="tk-foot mono">Self-rated, out of five.</p>`;
+  }
+  tabs.addEventListener('click', e => {
+    const b = e.target.closest('[data-cat]'); if (!b) return;
+    cat = b.dataset.cat;
+    tabs.querySelectorAll('[data-cat]').forEach(x => x.setAttribute('aria-pressed', String(x === b)));
+    chips.forEach((c, i) => c.classList.toggle('dim', cat !== 'all' && TOOLS[i].cat !== cat));
+    if (bodies && window.Matter) bodies.forEach((bd, i) => {
+      if (cat === 'all' || TOOLS[i].cat === cat) { window.Matter.Body.setVelocity(bd, { x: (Math.random() - 0.5) * 8, y: -12 - Math.random() * 6 }); window.Matter.Body.setAngularVelocity(bd, (Math.random() - 0.5) * 0.3); }
+    });
+  });
+  // keyboard and static mode: a plain click opens the details
+  pit.addEventListener('click', e => { const c = e.target.closest('.chip'); if (c && (!bodies || e.detail === 0)) show(+c.dataset.i); });
+
+  const physics = fine && !reduce && innerWidth >= 760;
+  if (!physics) { sec.classList.add('static'); return; }
+  let started = false;
+  const start = () => {
+    if (started || !window.Matter) return; started = true;
+    const { Engine, Bodies, Composite, Body, Mouse, MouseConstraint, Query } = window.Matter;
+    pit.classList.add('live');
+    const engine = Engine.create(); engine.gravity.y = 1.1;
+    let W = pit.clientWidth, H = pit.clientHeight;
+    const size = chips.map(c => [c.offsetWidth, c.offsetHeight]);
+    bodies = chips.map((c, i) => {
+      const [w, h] = size[i];
+      const b = Bodies.rectangle(w / 2 + 20 + Math.random() * Math.max(1, W - w - 40), -80 - i * 55, w, h, { chamfer: { radius: h / 2 - 1 }, restitution: 0.5, friction: 0.08, frictionAir: 0.012, density: 0.002 });
+      Body.setAngle(b, (Math.random() - 0.5) * 0.8); b.plugin.i = i; return b;
+    });
+    let walls = [];
+    const T = 400;
+    const makeWalls = () => {
+      Composite.remove(engine.world, walls);
+      walls = [
+        Bodies.rectangle(W / 2, H + T / 2, W * 3, T, { isStatic: true }),
+        Bodies.rectangle(-T / 2, 0, T, H * 5, { isStatic: true }),
+        Bodies.rectangle(W + T / 2, 0, T, H * 5, { isStatic: true }),
+        Bodies.rectangle(W / 2, -H * 1.6 - T / 2, W * 3, T, { isStatic: true }),
+      ];
+      Composite.add(engine.world, walls);
+    };
+    makeWalls();
+    bodies.forEach((b, i) => setTimeout(() => Composite.add(engine.world, b), i * 90));
+    const mouse = Mouse.create(pit);
+    ['mousewheel', 'DOMMouseScroll', 'wheel'].forEach(ev => pit.removeEventListener(ev, mouse.mousewheel));
+    const mc = MouseConstraint.create(engine, { mouse, constraint: { stiffness: 0.2, damping: 0.1, render: { visible: false } } });
+    Composite.add(engine.world, mc);
+    let down = null;
+    pit.addEventListener('pointerdown', e => { down = [e.clientX, e.clientY]; });
+    pit.addEventListener('pointerup', e => {
+      if (!down) return; const moved = Math.hypot(e.clientX - down[0], e.clientY - down[1]); down = null;
+      if (moved > 6) return;
+      const r = pit.getBoundingClientRect(); const hit = Query.point(bodies, { x: e.clientX - r.left, y: e.clientY - r.top })[0];
+      if (hit) show(hit.plugin.i);
+    });
+    pit.addEventListener('pointermove', e => {
+      const r = pit.getBoundingClientRect(); const hit = Query.point(bodies, { x: e.clientX - r.left, y: e.clientY - r.top })[0];
+      setCursor(hit ? 'Grab' : null);
+    });
+    pit.addEventListener('pointerleave', () => setCursor(null));
+    addEventListener('resize', () => {
+      W = pit.clientWidth; H = pit.clientHeight; makeWalls();
+      bodies.forEach(b => { if (b.position.x > W - 20 || b.position.x < 20) Body.setPosition(b, { x: W / 2, y: -60 }); });
+    });
+    let visible = true; onScreen(sec, v => { visible = v; });
+    (function loop() {
+      requestAnimationFrame(loop);
+      if (!visible) return;
+      Engine.update(engine, 1000 / 60);
+      bodies.forEach((b, i) => {
+        if (b.position.y > H + 300 || b.position.x < -300 || b.position.x > W + 300) { Body.setPosition(b, { x: W / 2, y: -60 }); Body.setVelocity(b, { x: 0, y: 0 }); }
+        chips[i].style.transform = `translate(${b.position.x - size[i][0] / 2}px,${b.position.y - size[i][1] / 2}px) rotate(${b.angle}rad)`;
+      });
+    })();
+  };
+  chips.forEach(c => { c.style.transform = 'translate(-999px,-999px)'; });
+  new IntersectionObserver((es, ob) => es.forEach(e => { if (e.isIntersecting) { start(); if (started) ob.disconnect(); } }), { threshold: 0.2 }).observe(pit);
+})();
+
+/* ================================================================ BEYOND: particles that morph */
+(async () => {
+  const sec = document.getElementById('beyond'), cv = document.getElementById('px'), ctx = cv.getContext('2d');
+  const items = [...document.querySelectorAll('#bxList li')], dots = [...document.querySelectorAll('.bx-dots i')];
+  try { await document.fonts.load('800 120px "Inter Tight"'); await document.fonts.load('700 120px "Inter Tight"'); } catch {}
+  const N = small ? 1500 : 3000, S = 440;
+  const PAL = [['#FF7A2E', '#FFB27A'], ['#FF9ECF', '#FFD23F', '#FFF3E3', '#B9A6FF'], ['#C9F24A', '#FFF3E3', '#FF9ECF']];
+  const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  function ball(g) {
+    g.translate(S / 2, S / 2);
+    g.fillStyle = PAL[0][0]; g.beginPath(); g.arc(0, 0, S * 0.42, 0, 7); g.fill();
+    g.fillStyle = PAL[0][1]; g.beginPath(); g.arc(-S * 0.12, -S * 0.14, S * 0.1, 0, 7); g.fill();
+    g.globalCompositeOperation = 'destination-out'; g.lineWidth = S * 0.032;
+    g.beginPath(); g.moveTo(0, -S * 0.5); g.lineTo(0, S * 0.5); g.stroke();
+    g.beginPath(); g.moveTo(-S * 0.5, 0); g.lineTo(S * 0.5, 0); g.stroke();
+    g.beginPath(); g.arc(-S * 0.62, 0, S * 0.46, -1, 1); g.stroke();
+    g.beginPath(); g.arc(S * 0.62, 0, S * 0.46, Math.PI - 1, Math.PI + 1); g.stroke();
+  }
+  function guitar(g) {
+    g.translate(S / 2, S / 2); g.rotate(-0.62); g.scale(0.86, 0.86);
+    g.fillStyle = PAL[1][0];
+    g.beginPath(); g.arc(0, S * 0.2, S * 0.2, 0, 7); g.fill();
+    g.beginPath(); g.arc(0, -S * 0.02, S * 0.155, 0, 7); g.fill();
+    g.fillStyle = PAL[1][1]; g.fillRect(-S * 0.032, -S * 0.47, S * 0.064, S * 0.32);
+    g.beginPath(); g.roundRect(-S * 0.055, -S * 0.575, S * 0.11, S * 0.12, S * 0.025); g.fill();
+    g.fillStyle = PAL[1][2]; [-1, 1].forEach(sd => [0, 1, 2].forEach(k => { g.beginPath(); g.arc(sd * S * 0.075, -S * (0.55 - k * 0.04), S * 0.014, 0, 7); g.fill(); }));
+    g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.arc(0, S * 0.05, S * 0.06, 0, 7); g.fill();
+    g.globalCompositeOperation = 'source-over';
+    g.strokeStyle = PAL[1][3]; g.lineWidth = S * 0.014; g.beginPath(); g.arc(0, S * 0.05, S * 0.08, 0, 7); g.stroke();
+    g.fillStyle = PAL[1][2]; g.fillRect(-S * 0.085, S * 0.27, S * 0.17, S * 0.035);
+    g.strokeStyle = PAL[1][2]; g.lineWidth = S * 0.007;
+    [-1.5, -0.5, 0.5, 1.5].forEach(k => { g.beginPath(); g.moveTo(k * S * 0.012, -S * 0.46); g.lineTo(k * S * 0.012, S * 0.28); g.stroke(); });
+  }
+  function chip(g) {
+    g.translate(S / 2, S / 2);
+    g.fillStyle = PAL[2][0];
+    for (let k = 0; k < 4; k++) {
+      const o = (k - 1.5) * S * 0.13;
+      [[o, -S * 0.39], [o, S * 0.39], [-S * 0.39, o], [S * 0.39, o]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, S * 0.026, 0, 7); g.fill(); });
+      g.fillRect(o - S * 0.012, -S * 0.39, S * 0.024, S * 0.06); g.fillRect(o - S * 0.012, S * 0.33, S * 0.024, S * 0.06);
+      g.fillRect(-S * 0.39, o - S * 0.012, S * 0.06, S * 0.024); g.fillRect(S * 0.33, o - S * 0.012, S * 0.06, S * 0.024);
+    }
+    g.strokeStyle = PAL[2][0]; g.lineWidth = S * 0.04; g.beginPath(); g.roundRect(-S * 0.3, -S * 0.3, S * 0.6, S * 0.6, S * 0.07); g.stroke();
+    g.fillStyle = PAL[2][1]; g.font = `800 ${S * 0.34}px "Inter Tight", Arial, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('AI', 0, S * 0.02);
+    g.fillStyle = PAL[2][2]; g.beginPath(); g.arc(-S * 0.2, -S * 0.2, S * 0.03, 0, 7); g.fill();
+  }
+  function sample(fn, pal) {
+    const c = document.createElement('canvas'); c.width = c.height = S;
+    const g = c.getContext('2d'); fn(g);
+    const d = g.getImageData(0, 0, S, S).data, pts = [], P = pal.map(hex);
+    for (let y = 0; y < S; y += 2) for (let x = 0; x < S; x += 2) {
+      const k = (y * S + x) * 4; if (d[k + 3] < 170) continue;
+      let best = 0, bd = 1e9;
+      P.forEach((p, j) => { const dd = (p[0] - d[k]) ** 2 + (p[1] - d[k + 1]) ** 2 + (p[2] - d[k + 2]) ** 2; if (dd < bd) { bd = dd; best = j; } });
+      pts.push([x / S - 0.5, y / S - 0.5, best]);
+    }
+    for (let i = pts.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [pts[i], pts[j]] = [pts[j], pts[i]]; }
+    return Array.from({ length: N }, (_, i) => pts[i % pts.length]);
+  }
+  const SH = [sample(ball, PAL[0]), sample(guitar, PAL[1]), sample(chip, PAL[2])];
+  const X = new Float32Array(N), Y = new Float32Array(N), VX = new Float32Array(N), VY = new Float32Array(N), WAIT = new Float32Array(N), PH = new Float32Array(N);
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, size = 0, stage = -1, mx = -9999, my = -9999, visible = false, order = [];
+  function resize() {
+    dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
+    cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+    if (W / H >= 0.9) { cx = W * 0.7; cy = H * 0.5; size = Math.min(H * 0.86, W * 0.52); }
+    else { cx = W / 2; cy = H * 0.33; size = Math.min(W * 0.92, H * 0.5); }
+  }
+  resize(); addEventListener('resize', resize);
+  for (let i = 0; i < N; i++) { X[i] = Math.random() * W; Y[i] = Math.random() * H; PH[i] = Math.random() * 6.283; }
+  function setStage(s) {
+    if (s === stage) return;
+    const first = stage === -1; stage = s;
+    items.forEach((li, i) => li.classList.toggle('on', i === s)); dots.forEach((d, i) => d.classList.toggle('on', i === s));
+    order = Array.from({ length: N }, (_, i) => i).sort((a, b) => SH[s][a][2] - SH[s][b][2]);
+    if (reduce) { for (let i = 0; i < N; i++) { X[i] = cx + SH[s][i][0] * size; Y[i] = cy + SH[s][i][1] * size; } return; }
+    for (let i = 0; i < N; i++) {
+      const a = Math.random() * 6.283, f = first ? 0 : 4 + Math.random() * 14;
+      VX[i] += Math.cos(a) * f; VY[i] += Math.sin(a) * f; WAIT[i] = first ? Math.random() * 30 : 4 + Math.random() * 22;
+    }
+  }
+  const move = (x, y) => { const r = cv.getBoundingClientRect(); mx = x - r.left; my = y - r.top; };
+  cv.addEventListener('pointermove', e => move(e.clientX, e.clientY));
+  cv.addEventListener('pointerleave', () => { mx = my = -9999; });
+  cv.addEventListener('touchmove', e => { const t = e.touches[0]; if (t) move(t.clientX, t.clientY); }, { passive: true });
+  cv.addEventListener('touchend', () => { mx = my = -9999; });
+  onScreen(sec, v => { visible = v; });
+  const progress = () => { const r = sec.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight))); };
+  const R = small ? 70 : 110, R2 = R * R, dot = small ? 2.1 : 2.3;
+  let t = 0;
+  (function loop() {
+    requestAnimationFrame(loop);
+    if (!visible) return;
+    const pr = progress(); setStage(pr < 0.34 ? 0 : pr < 0.67 ? 1 : 2);
+    t += 0.016;
+    ctx.clearRect(0, 0, W, H);
+    const pts = SH[stage], pal = PAL[stage];
+    let col = -1;
+    for (let n = 0; n < N; n++) {
+      const i = order[n], p = pts[i];
+      if (!reduce) {
+        const tx = cx + p[0] * size + Math.sin(t * 1.3 + PH[i]) * 0.8, ty = cy + p[1] * size + Math.cos(t * 1.1 + PH[i]) * 0.8;
+        if (WAIT[i] > 0) WAIT[i]--; else { VX[i] += (tx - X[i]) * 0.022; VY[i] += (ty - Y[i]) * 0.022; }
+        const dx = X[i] - mx, dy = Y[i] - my, d2 = dx * dx + dy * dy;
+        if (d2 < R2 && d2 > 0.01) { const d = Math.sqrt(d2), f = (1 - d / R) * 3.4; VX[i] += dx / d * f; VY[i] += dy / d * f; }
+        VX[i] *= 0.86; VY[i] *= 0.86; X[i] += VX[i]; Y[i] += VY[i];
+      }
+      if (p[2] !== col) { col = p[2]; ctx.fillStyle = pal[col]; }
+      ctx.fillRect(X[i] - dot / 2, Y[i] - dot / 2, dot, dot);
+    }
+  })();
+})();
 
 /* ================================================================ data for work, index, lightbox */
 const [TD, MD] = await Promise.all([fetch('data/tiles.json').then(r => r.json()), fetch('data/mosaic.json').then(r => r.json())]);
@@ -101,9 +342,9 @@ const tiles = TD.tiles, NAMES = TD.names;
 const pages = tiles.filter(t => t.url).map(t => t.i);
 document.getElementById('wfCount').textContent = tiles.length;
 document.getElementById('wfPages').textContent = pages.length;
-document.querySelectorAll('[data-count]:not(.num-grid [data-count])').forEach(el => { el.textContent = TD.counts[el.dataset.count] || 0; });
+document.querySelectorAll('[data-count]').forEach(el => { el.textContent = TD.counts[el.dataset.count] || 0; });
 document.getElementById('idxCount').textContent = `${pages.length} pages · ${tiles.length} tiles`;
-const label = t => t.url ? `<b>${esc(NAMES[t.c])}</b> · ${esc(t.t)} <i>— ${esc(t.title)}</i>` : t.label;
+const label = t => t.url ? `<b>${esc(NAMES[t.c])}</b> · ${esc(t.t)} · <i>${esc(t.title)}</i>` : t.label;
 
 /* ================================================================ overlays */
 const drawer = document.getElementById('drawer'), lbEl = document.getElementById('lightbox');
@@ -145,7 +386,7 @@ const currentList = () => pages.filter(i => (fClient === 'all' || tiles[i].c ===
 function renderIndex() {
   document.querySelectorAll('[data-fc]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.fc === fClient)));
   document.querySelectorAll('[data-ft]').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.ft === fType)));
-  grid.innerHTML = currentList().map(i => { const t = tiles[i]; return `<button class="card" data-i="${i}"><div class="im"><img loading="lazy" decoding="async" src="thumb/${pad4(i)}.webp" alt=""></div><p class="cm">${esc(NAMES[t.c])} · ${esc(t.t)}</p><p class="ct">${esc(t.title)}</p></button>`; }).join('')
+  grid.innerHTML = currentList().map(i => { const t = tiles[i]; return `<button class="card" data-i="${i}"><div class="im"><img loading="lazy" decoding="async" src="thumb/${pad4(i)}.webp" alt=""></div><p class="cm mono">${esc(NAMES[t.c])} · ${esc(t.t)}</p><p class="ct">${esc(t.title)}</p></button>`; }).join('')
     || '<p class="lede">Nothing matches that filter yet.</p>';
   grid.closest('.drawer-body').scrollTop = 0;
 }
@@ -162,7 +403,7 @@ function openLightbox(i, list) {
 }
 function showLb() {
   const t = tiles[lbList[lbAt]];
-  lb.img.classList.remove('ready'); lb.img.src = `work/${pad4(t.i)}.webp`; lb.img.alt = `${NAMES[t.c]} — ${t.title}`;
+  lb.img.classList.remove('ready'); lb.img.src = `work/${pad4(t.i)}.webp`; lb.img.alt = `${NAMES[t.c]}: ${t.title}`;
   lb.logo.style.setProperty('--pb', PLATE[t.c] || '#fff'); lb.logo.innerHTML = `<img src="logos/${t.c}.png" alt="${esc(NAMES[t.c])} logo">`;
   lb.client.textContent = NAMES[t.c]; lb.type.textContent = t.t; lb.title.textContent = t.title || NAMES[t.c];
   let pretty = t.url; try { const u = new URL(t.url); pretty = u.host.replace(/^www\./, '') + decodeURI(u.pathname).replace(/\/$/, ''); } catch {}
@@ -179,7 +420,6 @@ function activateTile(i) {
   else if (t.c) openIndex(t.c);
   else goTo(document.getElementById(t.open === 'about' ? 'services' : 'work'));
 }
-
 
 /* ================================================================ work rows: hover preview */
 (() => {
@@ -207,13 +447,13 @@ function activateTile(i) {
   })();
 })();
 
-/* ================================================================ WORK: portrait made of work */
+/* ================================================================ ARCHIVE: portrait made of work, then an endless flight */
 const V = small ? 'sm' : 'lg';
 const wfCanvas = document.getElementById('wf'), wfLoad = document.getElementById('wfLoad'), wfPct = document.getElementById('wfPct');
 let started = false;
-const startWork = () => { if (started) return; started = true; workScene().catch(err => { console.error(err); wfLoad.textContent = 'The 3D view could not load here — browse all pages instead.'; }); };
-new IntersectionObserver((es, ob) => es.forEach(e => { if (e.isIntersecting) { startWork(); ob.disconnect(); } }), { rootMargin: '200% 0px' }).observe(wfSec);
-setTimeout(startWork, 3500);
+const startWork = () => { if (started) return; started = true; workScene().catch(err => { console.error(err); wfLoad.textContent = 'The 3D view could not load here. Browse all pages instead.'; }); };
+new IntersectionObserver((es, ob) => es.forEach(e => { if (e.isIntersecting) { startWork(); ob.disconnect(); } }), { rootMargin: '150% 0px' }).observe(wfSec);
+setTimeout(startWork, 6000);
 
 async function loadAtlases() {
   const L = TD.layout[V];
@@ -234,14 +474,14 @@ async function loadAtlases() {
 async function workScene() {
   const imgs = await loadAtlases();
   const L = TD.layout[V], M = MD[V];
+  const BG = 0x150E22;
   const renderer = new THREE.WebGLRenderer({ canvas: wfCanvas, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2)); renderer.setClearColor(0x0E0E0E, 1);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2)); renderer.setClearColor(BG, 1);
   const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(52, 1, 0.1, 400); camera.position.set(0, 0, 6);
 
   const rand = (() => { let s = 20261115; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
   const C = M.cols, R = M.rows;
   const PH = small ? 15 : 16.5, cellH = PH / R, cellW = cellH * 4 / 3, PZ = -14;
-  let CX = 0, CY = 0;
   const toLin = v => Math.pow(v, 2.2);
   const inst = [], used = new Set();
   for (const [cx, cy, k, r, g, b, lum] of M.cells) {
@@ -262,7 +502,7 @@ async function workScene() {
   const textures = imgs.map(img => { const t = new THREE.Texture(img); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); t.needsUpdate = true; return t; });
   const U = {
     uP: { value: 0 }, uTravel: { value: 0 }, uDepth: { value: DEPTH }, uFar: { value: FAR }, uHover: { value: -1 }, uTime: { value: 0 }, uShift: { value: new THREE.Vector2() },
-    uTintK: { value: small ? 0.76 : 0.74 }, uBg: { value: new THREE.Color(0x0E0E0E) }, uAccent: { value: new THREE.Color(0xFF4D12) }, uWobble: { value: reduce ? 0 : 1 },
+    uTintK: { value: small ? 0.76 : 0.74 }, uBg: { value: new THREE.Color(BG) }, uAccent: { value: new THREE.Color(0xC9F24A) }, uWobble: { value: reduce ? 0 : 1 },
   };
   const vert = `
     attribute vec4 aP0; attribute vec4 aP1; attribute vec4 aTint; attribute vec4 aRect; attribute float aId;
@@ -295,7 +535,7 @@ async function workScene() {
       c = mix(c, vTint, vTintAmt * uTintK * (1.0 - vHover));
       float fade = pow(smoothstep(uFar, uFar * 0.1, vDepth), 1.3) * smoothstep(0.3, 2.4, vDepth);
       vec3 col = mix(uBg, c, fade);
-      col = mix(col, uAccent, smoothstep(-0.014, 0.0, d) * vHover * fade);
+      col = mix(col, uAccent, smoothstep(-0.016, 0.0, d) * vHover * fade);
       gl_FragColor = vec4(col, 1.0);
       #include <colorspace_fragment>
     }`;
@@ -318,12 +558,14 @@ async function workScene() {
     mesh.frustumCulled = false; scene.add(mesh);
   });
 
-  // ---------- scroll drives the flight; pointer only hovers and clicks
-  const TRANS = 34, FLY = small ? 150 : 210, HOLD = 0.07;
-  let travel = 0, pointerIn = false, tipX = 0, tipY = 0, inView = false;
+  // ---------- scroll drives the flight. Near the bottom the page quietly jumps back and the flight carries on: an endless archive.
+  const TRANS = 34, PER = small ? 34 : 40, HOLD = 0.06, LOOP_AT = 0.9, LOOP_TO = 0.5;
+  const base = pr => pr < HOLD ? 0 : (pr - HOLD) * PER * 10;
+  let travel = 0, offset = 0, pointerIn = false, tipX = 0, tipY = 0, inView = false;
   const pointer = new THREE.Vector2(), look = new THREE.Vector2(), rest = new THREE.Vector2();
   new IntersectionObserver(es => es.forEach(e => { inView = e.isIntersecting; }), { threshold: 0 }).observe(wfSec);
-  const progress = () => { const r = wfSec.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight))); };
+  const span = () => Math.max(1, wfSec.offsetHeight - innerHeight);
+  const progress = () => { const r = wfSec.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / span())); };
   const setPointer = e => { const r = wfCanvas.getBoundingClientRect(); pointer.set((e.clientX - r.left) / r.width * 2 - 1, -((e.clientY - r.top) / r.height) * 2 + 1); tipX = e.clientX; tipY = e.clientY; };
   wfCanvas.addEventListener('pointermove', e => { pointerIn = true; setPointer(e); });
   wfCanvas.addEventListener('pointerleave', () => { pointerIn = false; });
@@ -354,30 +596,37 @@ async function workScene() {
     return best;
   }
 
-  const tip = document.getElementById('tip'), bar = document.getElementById('wfBar'), hud = document.getElementById('wfLabel');
+  const tip = document.getElementById('tip'), hud = document.getElementById('wfLabel'), odo = document.getElementById('wfOdo');
   const hudIdle = small ? `<b>${tiles.length}</b> pieces · tap to open` : `<b>${tiles.length}</b> pieces of work · hover to see, click to open`;
-  if (small) { const l = document.querySelector('.ar-copy .lede'); if (l) l.innerHTML = l.innerHTML.replace("Hover to see what's what, click to open one.", 'Tap any tile to open it.'); }
   hud.innerHTML = hudIdle;
-  let hovered = -1, t0 = performance.now(), frame = 0;
+  let hovered = -1, frame = 0;
   function resize() {
     const w = innerWidth, h = innerHeight; renderer.setSize(w, h, false); camera.aspect = w / h;
     camera.fov = w / h < 0.8 ? 64 : 52; camera.updateProjectionMatrix();
-    // desktop: portrait sits right of the copy; mobile: centred, lifted above the copy
     const halfW = Math.tan(camera.fov * Math.PI / 360) * 20 * camera.aspect;
-    CX = w / h >= 0.8 ? Math.min(halfW * 0.42, halfW - C * cellW * 0.5 - 0.6) : 0; CY = w / h >= 0.8 ? -0.4 : 2.6;
+    const CX = w / h >= 0.8 ? Math.min(halfW * 0.42, halfW - C * cellW * 0.5 - 0.6) : 0, CY = w / h >= 0.8 ? -0.4 : 2.6;
     U.uShift.value.set(CX, CY);
   }
   addEventListener('resize', resize); resize();
   function loop() {
     requestAnimationFrame(loop);
+    let pr = progress();
+    // left the archive upwards: reset so the portrait is waiting next time
+    if (pr === 0 && wfSec.getBoundingClientRect().top > innerHeight * 0.5 && offset) { offset = 0; travel = 0; }
+    // endless: near the end, jump back and keep the flight continuous
+    if (pr > LOOP_AT && !anyOpen()) {
+      offset += base(pr) - base(LOOP_TO);
+      jumpTo(wfSec.offsetTop + LOOP_TO * span());
+      pr = LOOP_TO;
+    }
     if (!inView) { if (hovered >= 0) { hovered = -1; U.uHover.value = -1; tip.classList.remove('on'); } return; }
     frame++;
-    const now = performance.now(); t0 = now;
-    const pr = progress(), target = pr < HOLD ? 0 : (pr - HOLD) / (1 - HOLD) * (TRANS + FLY);
+    const now = performance.now();
+    const target = base(pr) + offset;
     travel += (target - travel) * (reduce ? 1 : 0.12);
     U.uP.value = travel / TRANS; U.uTravel.value = travel; U.uTime.value = now / 1000;
     wfSec.classList.toggle('flying', travel > 3);
-    bar.style.transform = `scaleX(${pr.toFixed(4)})`;
+    if ((frame & 7) === 0) odo.textContent = `${Math.round(travel * 3).toLocaleString('en-IN')} m in`;
     look.lerp(pointerIn && !small ? pointer : rest, reduce ? 0.02 : 0.045);
     camera.position.x = look.x * 0.9; camera.position.y = look.y * 0.6;
     camera.lookAt(look.x * 0.25, look.y * 0.15, -30); camera.updateMatrixWorld();

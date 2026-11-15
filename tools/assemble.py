@@ -41,6 +41,7 @@ tiles = []
 for s in kept:
     title = s.get('h1') or clean_title(s.get('title'), s['client'])
     title = re.sub(r'\s+', ' ', title).strip()[:110]
+    title = re.sub(r'\s*[—–]\s*', ' · ', title).strip(' ·')
     tiles.append({'src': s['im'], 'client': s['client'], 'cat': s['cat'], 'title': title, 'url': s.get('final') or s['url'], 'shot': True})
 for d in designed:
     tiles.append({'src': Image.open(f"{B}/{d['file']}").convert('RGB'), 'client': d['client'], 'cat': 'Design', 'label': d['label'], 'open': d['open'], 'shot': False})

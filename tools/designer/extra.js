@@ -51,7 +51,7 @@ P.logo = (ctx, d) => {
   const dark = lum(bg) < .5;
   if (d.variant === 'alt' && b.on === 'dark') { ctx.fillStyle = b.bg; rr(ctx, 40, 110, TW - 80, 150, 18); ctx.fill(); }
   drawLogo(ctx, d.k, TW / 2, TH / 2 - 6, TW - 140, 110);
-  text(ctx, `${b.sector} — ${b.region}`.toUpperCase(), TW / 2, TH - 34, `500 12px ${SANS}`, dark ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.5)', 'center');
+  text(ctx, `${b.sector} · ${b.region}`.toUpperCase(), TW / 2, TH - 34, `500 12px ${SANS}`, dark ? 'rgba(255,255,255,.55)' : 'rgba(0,0,0,.5)', 'center');
 };
 P.case = (ctx, d, r) => {
   const b = BRANDS[d.k]; const pal = d.pal;
