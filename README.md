@@ -1,7 +1,7 @@
 # Harsh Nigam — portfolio
 
-A static, single-page portfolio: hero, approach, numbers, services, Work, clients, case studies,
-path, toolkit, resume and contact. The Work section is a portrait of Harsh made from 700+ tiles of
+A static, single-page editorial portfolio: hero with photo, statement, selected clients, the archive,
+services, notes, about, resume and contact. The archive is a portrait of Harsh made from 700+ tiles of
 real client work (websites, blogs, service pages, case studies); scrolling through the section breaks
 it into a Three.js fly-through. Every page tile opens a preview linked to the live page, and the
 index lists every page by client and type.

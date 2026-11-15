@@ -2,131 +2,97 @@ import * as THREE from 'three';
 
 const root = document.documentElement;
 const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
-const mobile = matchMedia('(max-width: 760px)').matches;
 const fine = matchMedia('(pointer: fine)').matches;
 const small = innerWidth < 760 || matchMedia('(pointer: coarse)').matches;
 const gsap = window.gsap, ScrollTrigger = window.ScrollTrigger;
 const hasGsap = !!(gsap && ScrollTrigger);
 if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 const MAIL = 'harshnigam788@gmail.com';
+const API = 'https://harshnigam788-ui.github.io/portfolio/resume/resume.json';
 const PLATE = { valintry360: '#0b1f3a', valintry: '#ffffff', ignitehcm: '#1b1719', bullseye: '#ffffff', calance: '#ffffff', prateek: '#0b2a4a', tag: '#141414', advayan: '#0a0f3d', zapfire: '#1a1210', iinfotanks: '#ffffff' };
 const TYPES = ['Homepage', 'Service page', 'Case study', 'Blog', 'Brand page'];
 const pad4 = n => String(n).padStart(4, '0');
 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));
+const wfSec = document.getElementById('archive');
 
 /* ================================================================ clock, toast, copy */
-const clocks = [document.getElementById('clock'), document.getElementById('clock2')].filter(Boolean);
 const fmt = new Intl.DateTimeFormat('en-GB', { hour: '2-digit', minute: '2-digit', timeZone: 'Asia/Kolkata' });
-const tick = () => { const t = fmt.format(new Date()); clocks.forEach(c => { c.textContent = t; }); };
+const tick = () => { const t = fmt.format(new Date()); document.querySelectorAll('.js-clock').forEach(c => { c.textContent = t; }); };
 tick(); setInterval(tick, 15000);
-
 const toast = document.getElementById('toast'); let tt;
 function say(m) { toast.textContent = m; toast.classList.add('show'); clearTimeout(tt); tt = setTimeout(() => toast.classList.remove('show'), 2400); }
-async function copyText(text, el, label) {
-  try { await navigator.clipboard.writeText(text); say(`${label} copied: ${text}`); }
-  catch { const r = document.createRange(); r.selectNodeContents(el); const s = getSelection(); s.removeAllRanges(); s.addRange(r); say('Selected. Press Ctrl/Cmd + C to copy.'); }
+async function copyText(text, label) {
+  try { await navigator.clipboard.writeText(text); say(`${label} copied — ${text}`); }
+  catch { say(`${label}: ${text}`); }
 }
-document.getElementById('copyMail').addEventListener('click', () => copyText(MAIL, document.getElementById('mail'), 'Email'));
-document.querySelectorAll('[data-copy]').forEach(b => b.addEventListener('click', () => { const el = document.getElementById(b.dataset.copy); copyText(el.textContent, el, 'Link'); }));
-
-/* ================================================================ grain */
-(() => {
-  const c = document.getElementById('grain'); const x = c.getContext('2d'); c.width = 160; c.height = 160;
-  const img = x.createImageData(160, 160);
-  for (let i = 0; i < img.data.length; i += 4) { const v = Math.random() * 255 | 0; img.data[i] = img.data[i + 1] = img.data[i + 2] = v; img.data[i + 3] = 255; }
-  x.putImageData(img, 0, 0); c.style.imageRendering = 'pixelated';
-})();
-
-/* ================================================================ type splitting */
-document.querySelectorAll('[data-split]').forEach(el => {
-  const t = el.textContent; el.textContent = '';
-  t.split('').forEach(ch => { const s = document.createElement('span'); s.className = 'ch'; s.textContent = ch; s.setAttribute('aria-hidden', 'true'); el.appendChild(s); });
-});
-const man = document.getElementById('manifesto');
-(() => {
-  const nodes = [...man.childNodes]; man.innerHTML = '';
-  nodes.forEach(n => {
-    if (n.nodeType === 3) n.textContent.split(/(\s+)/).forEach(part => {
-      if (!part) return;
-      if (/^\s+$/.test(part)) { man.appendChild(document.createTextNode(part)); return; }
-      const s = document.createElement('span'); s.className = 'w'; s.textContent = part; man.appendChild(s);
-    });
-    else { n.classList.add('w'); man.appendChild(n); }
-  });
-})();
-if (!hasGsap || reduce) man.querySelectorAll('.w').forEach(w => { w.style.opacity = 1; });
+document.getElementById('copyMail').addEventListener('click', () => copyText(MAIL, 'Email'));
+document.getElementById('copyApi').addEventListener('click', () => copyText(API, 'JSON URL'));
 
 /* ================================================================ smooth scroll */
 let lenis = null;
 if (!reduce && window.Lenis && hasGsap) {
   try {
-    lenis = new window.Lenis({ lerp: 0.09, smoothWheel: true });
+    lenis = new window.Lenis({ lerp: 0.1, smoothWheel: true });
     lenis.on('scroll', ScrollTrigger.update);
     gsap.ticker.add(t => lenis.raf(t * 1000));
     gsap.ticker.lagSmoothing(0);
   } catch { lenis = null; }
 }
 function goTo(target) {
+  if (!target) return;
   if (lenis) lenis.scrollTo(target, { offset: 0, duration: 1.6 });
   else target.scrollIntoView({ behavior: reduce ? 'auto' : 'smooth' });
 }
 document.querySelectorAll('[data-scroll]').forEach(a => a.addEventListener('click', ev => {
-  const id = a.getAttribute('href'); const target = document.querySelector(id);
-  if (!target) return; ev.preventDefault(); goTo(target);
+  const target = document.querySelector(a.getAttribute('href')); if (!target) return;
+  ev.preventDefault(); goTo(target);
 }));
 
 /* ================================================================ cursor */
+const cur = document.querySelector('.cursor'), curLabel = cur.querySelector('span');
+let setCursor = () => {};
 if (fine && !reduce) {
-  const dot = document.querySelector('.cur'), ring = document.querySelector('.cur-ring'), lab = ring.querySelector('span');
-  let mx = -100, my = -100, rx = -100, ry = -100;
+  let mx = -100, my = -100, cx = -100, cy = -100;
   addEventListener('pointermove', e => { mx = e.clientX; my = e.clientY; root.classList.add('has-cursor'); }, { passive: true });
   document.addEventListener('pointerleave', () => root.classList.remove('has-cursor'));
-  (function loop() { rx += (mx - rx) * 0.18; ry += (my - ry) * 0.18; dot.style.transform = `translate(${mx}px,${my}px)`; ring.style.transform = `translate(${rx}px,${ry}px)`; requestAnimationFrame(loop); })();
-  document.addEventListener('pointerover', e => { const el = e.target.closest('[data-cursor]'); if (el) { lab.textContent = el.dataset.cursor; ring.classList.add('big'); } });
-  document.addEventListener('pointerout', e => { const el = e.target.closest('[data-cursor]'); if (el && !el.contains(e.relatedTarget)) ring.classList.remove('big'); });
-  document.querySelectorAll('.magnet').forEach(el => {
-    el.addEventListener('pointermove', e => { const r = el.getBoundingClientRect(); const x = e.clientX - r.left - r.width / 2, y = e.clientY - r.top - r.height / 2; el.style.transform = `translate(${x * 0.18}px,${y * 0.3}px)`; });
-    el.addEventListener('pointerleave', () => { el.style.transform = ''; });
-    el.style.transition = 'transform .35s cubic-bezier(.2,.8,.2,1)';
-  });
+  (function loop() { cx += (mx - cx) * 0.2; cy += (my - cy) * 0.2; cur.style.transform = `translate(${cx}px,${cy}px)`; requestAnimationFrame(loop); })();
+  setCursor = label => { if (label) { curLabel.textContent = label; cur.classList.add('big'); } else cur.classList.remove('big'); };
+  document.addEventListener('pointerover', e => { const el = e.target.closest('[data-cursor]'); if (el) setCursor(el.dataset.cursor); });
+  document.addEventListener('pointerout', e => { const el = e.target.closest('[data-cursor]'); if (el && !el.contains(e.relatedTarget)) setCursor(null); });
 }
 
-/* ================================================================ hero query typing */
-const q = document.getElementById('qtext'), full = q.textContent;
-if (!reduce) {
-  q.textContent = ''; let qi = 0;
-  setTimeout(function type() { q.textContent = full.slice(0, ++qi); if (qi < full.length) setTimeout(type, 38 + Math.random() * 60); }, 500);
-}
-
-/* ================================================================ GSAP motion */
+/* ================================================================ hero + statement + reveals */
 if (hasGsap && !reduce) {
-  gsap.fromTo('.hero-name .line', { '--wdth': 50, '--wght': 300, yPercent: 18 }, { '--wdth': 125, '--wght': 820, yPercent: 0, duration: 1.8, stagger: .14, ease: 'expo.out', delay: .15 });
-  gsap.fromTo('.hero-name .line', { '--wdth': 125 }, { '--wdth': 62, immediateRender: false, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.to('.hero-name', { yPercent: -30, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
-  gsap.from('.hero-foot > *, .cue', { y: 30, opacity: 0, duration: 1.2, stagger: .1, ease: 'expo.out', delay: .6 });
-  gsap.utils.toArray('.st.vw').forEach(el => gsap.fromTo(el, { '--wdth': 54 }, { '--wdth': 112, ease: 'none', scrollTrigger: { trigger: el, start: 'top 96%', end: 'top 40%', scrub: true } }));
-  gsap.to('#manifesto .w', { opacity: 1, stagger: .08, ease: 'none', scrollTrigger: { trigger: '#manifesto', start: 'top 78%', end: 'bottom 42%', scrub: true } });
-  const skewTo = gsap.quickTo('.mq-track', 'skewX', { duration: .4, ease: 'power3' });
-  ScrollTrigger.create({ onUpdate: s => skewTo(gsap.utils.clamp(-12, 12, s.getVelocity() / -260)) });
-  gsap.utils.toArray('.numbers .lede, .numbers .eyebrow, .services .eyebrow, .services .lede, .clients-sec .eyebrow, .clients-sec .lede, .cases .eyebrow, .path .eyebrow, .kit .eyebrow, .resume .eyebrow, .contact .eyebrow, .contact .lede, .stat, .item, .kit-grid > div, .cl, .cl-also, .rs, .cdetails, .reach, .avail, .engines-row, .work > .eyebrow')
-    .forEach(el => gsap.from(el, { y: 36, opacity: 0, duration: 1.1, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 92%' } }));
-  document.querySelectorAll('.num-grid [data-count]').forEach(el => {
-    const end = +el.dataset.count, sup = el.querySelector('sup'), supHTML = sup ? sup.outerHTML : '';
-    ScrollTrigger.create({ trigger: el, start: 'top 88%', once: true, onEnter: () => { const o = { v: 0 }; gsap.to(o, { v: end, duration: 1.6, ease: 'power3.out', onUpdate: () => { el.innerHTML = Math.round(o.v) + supHTML; } }); } });
-  });
-  gsap.utils.toArray('[data-bar]').forEach(el => gsap.from(el, { scaleX: 0, duration: 1.4, ease: 'expo.out', scrollTrigger: { trigger: el, start: 'top 92%' } }));
-  const mm = gsap.matchMedia();
-  mm.add('(min-width: 900px)', () => {
-    const track = document.getElementById('htrack');
-    const dist = () => Math.max(0, track.scrollWidth - innerWidth);
-    gsap.to(track, { x: () => -dist(), ease: 'none', scrollTrigger: { trigger: '.services', start: 'top top', end: () => '+=' + dist(), pin: true, scrub: 1, invalidateOnRefresh: true, anticipatePin: 1 } });
-    gsap.utils.toArray('.case').forEach((card, i, all) => {
-      if (i === all.length - 1) return;
-      gsap.to(card, { scale: .94, filter: 'brightness(.55)', ease: 'none', scrollTrigger: { trigger: all[i + 1], start: 'top bottom', end: 'top ' + (64 + 12 + (i + 1) * 16) + 'px', scrub: true } });
+  gsap.from('.hero-name .rv', { yPercent: 105, duration: 1.4, ease: 'expo.out', stagger: 0.12, delay: 0.1 });
+  gsap.from('.hero-fig', { clipPath: 'inset(100% 0 0 0)', duration: 1.4, ease: 'expo.inOut', delay: 0.25 });
+  gsap.from('.hero-fig img', { scale: 1.25, duration: 1.8, ease: 'expo.out', delay: 0.25 });
+  gsap.from('.hero-corners p, .hero-fig figcaption', { y: 16, opacity: 0, duration: 1, ease: 'expo.out', stagger: 0.08, delay: 0.9 });
+  gsap.to('.hn-l', { xPercent: -14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hn-r', { xPercent: 14, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+  gsap.to('.hero-fig', { yPercent: -18, ease: 'none', scrollTrigger: { trigger: '.hero', start: 'top top', end: 'bottom top', scrub: true } });
+}
+(() => {
+  const big = document.getElementById('big');
+  const wrap = node => {
+    [...node.childNodes].forEach(n => {
+      if (n.nodeType === 3) {
+        const frag = document.createDocumentFragment();
+        n.textContent.split(/(\s+)/).forEach(p => { if (!p) return; if (/^\s+$/.test(p)) frag.appendChild(document.createTextNode(p)); else { const s = document.createElement('span'); s.className = 'w'; s.textContent = p; frag.appendChild(s); } });
+        n.replaceWith(frag);
+      } else wrap(n);
     });
-  });
-  gsap.fromTo('#rail', { scaleY: 0 }, { scaleY: 1, ease: 'none', scrollTrigger: { trigger: '.tl', start: 'top 70%', end: 'bottom 70%', scrub: true } });
-  gsap.from('.contact .st em', { '--wdth': 50, color: '#ECEEFF', ease: 'none', scrollTrigger: { trigger: '.contact', start: 'top 70%', end: 'center center', scrub: true } });
+  };
+  wrap(big);
+  const words = [...big.querySelectorAll('.w')];
+  if (!hasGsap || reduce) { words.forEach(w => w.classList.add('on')); return; }
+  ScrollTrigger.create({ trigger: big, start: 'top 82%', end: 'bottom 45%', scrub: true,
+    onUpdate: s => { const n = Math.round(s.progress * words.length); words.forEach((w, i) => w.classList.toggle('on', i < n)); } });
+})();
+const revealEls = document.querySelectorAll('.sec-head > *, .row, .svc li, .nums > div, .note, .ab-story p, .path li, .kit, .rs-row > *, .ct-grid a, .facts > div, .mail, .huge, .contact .label');
+if (!reduce && 'IntersectionObserver' in window) {
+  revealEls.forEach(el => el.classList.add('reveal'));
+  const io = new IntersectionObserver(es => es.forEach(e => { if (e.isIntersecting) { e.target.classList.add('in'); io.unobserve(e.target); } }), { rootMargin: '0px 0px -8% 0px' });
+  revealEls.forEach((el, i) => { el.style.transitionDelay = `${(i % 4) * 60}ms`; io.observe(el); });
 }
 
 /* ================================================================ data for work, index, lightbox */
@@ -211,123 +177,34 @@ function activateTile(i) {
   const t = tiles[i];
   if (t.url) openLightbox(i);
   else if (t.c) openIndex(t.c);
-  else goTo(document.getElementById(t.open === 'about' ? 'numbers' : 'clients'));
+  else goTo(document.getElementById(t.open === 'about' ? 'services' : 'work'));
 }
 
-/* ================================================================ background particle field */
-const glCanvas = document.getElementById('gl');
-const wfSec = document.getElementById('work');
-let workVisible = false;
-new IntersectionObserver(es => es.forEach(e => { workVisible = e.isIntersecting && e.intersectionRatio > 0.35; }), { threshold: [0, 0.35, 0.6] }).observe(wfSec);
 
-(function particles() {
-  let renderer;
-  try { renderer = new THREE.WebGLRenderer({ canvas: glCanvas, alpha: true, antialias: false, powerPreference: 'high-performance' }); }
-  catch { glCanvas.style.display = 'none'; return; }
-  renderer.setPixelRatio(Math.min(devicePixelRatio || 1, 2)); renderer.setSize(innerWidth, innerHeight, false);
-  const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(42, innerWidth / innerHeight, 0.1, 100); camera.position.set(0, 0, 8.2);
-  const N = mobile ? 4200 : 9000, rnd = Math.random, PI = Math.PI, TAU = PI * 2;
-  const seeded = s => () => { s = (s * 16807) % 2147483647; return (s - 1) / 2147483646; };
-  function sphere() { const a = new Float32Array(N * 3), shellN = Math.floor(N * 0.82);
-    for (let i = 0; i < N; i++) { let x, y, z;
-      if (i < shellN) { const t = (i + 0.5) / shellN, phi = Math.acos(1 - 2 * t), th = PI * (1 + Math.sqrt(5)) * i, r = 2.15; x = r * Math.sin(phi) * Math.cos(th); y = r * Math.cos(phi); z = r * Math.sin(phi) * Math.sin(th); }
-      else { const u = rnd(), v = rnd(), rr = 0.5 + rnd() * 1.5, ph = Math.acos(2 * v - 1), tt = TAU * u; x = rr * Math.sin(ph) * Math.cos(tt); y = rr * Math.cos(ph); z = rr * Math.sin(ph) * Math.sin(tt); }
-      a[i * 3] = x; a[i * 3 + 1] = y; a[i * 3 + 2] = z; } return a; }
-  function wave() { const a = new Float32Array(N * 3), side = Math.ceil(Math.sqrt(N));
-    for (let i = 0; i < N; i++) { const ix = i % side, iz = Math.floor(i / side), x = (ix / side - 0.5) * 9, z = (iz / side - 0.5) * 6;
-      a[i * 3] = x; a[i * 3 + 1] = 0.38 * Math.sin(x * 1.05 + z * 0.6) + 0.22 * Math.cos(z * 1.6 - x * 0.3); a[i * 3 + 2] = z; } return a; }
-  function bars() { const a = new Float32Array(N * 3), B = 9, h = []; let tot = 0;
-    for (let k = 0; k < B; k++) { h[k] = 0.45 * Math.pow(1.29, k); tot += h[k]; }
-    for (let i = 0; i < N; i++) { let r = rnd() * tot, k2 = 0; while (r > h[k2] && k2 < B - 1) { r -= h[k2]; k2++; }
-      const w = 0.34, cx = (k2 - 4) * 0.6, top = rnd() < 0.12;
-      a[i * 3] = cx + (rnd() - 0.5) * w; a[i * 3 + 1] = -1.9 + (top ? h[k2] : rnd() * h[k2]); a[i * 3 + 2] = (rnd() - 0.5) * w; } return a; }
-  function funnel() { const a = new Float32Array(N * 3);
-    for (let i = 0; i < N; i++) { let x, y, z;
-      if (rnd() < 0.86) { const u = Math.pow(rnd(), 0.7); y = -2.0 + u * 4.1; const r = 0.16 + 2.35 * Math.pow(u, 1.9), th = rnd() * TAU; x = r * Math.cos(th); z = r * Math.sin(th); }
-      else { y = -2.0 - rnd() * 1.4; const r2 = rnd() * 0.14, t2 = rnd() * TAU; x = r2 * Math.cos(t2); z = r2 * Math.sin(t2); }
-      a[i * 3] = x; a[i * 3 + 1] = y; a[i * 3 + 2] = z; } return a; }
-  function pagesShape() { const a = new Float32Array(N * 3), cols = 7, rows = 3, R = 5;
-    for (let i = 0; i < N; i++) { const c = i % cols, rI = Math.floor(i / cols) % rows, card = c * rows + rI, g = seeded(card * 97 + 13);
-      const phi = (c - 3) * 0.3, cx = Math.sin(phi) * R, cz = Math.cos(phi) * R - R, cy = (rI - 1) * 1.36; let lx, ly; const w = 0.86, hh = 1.12;
-      if (rnd() < 0.28) { const p = rnd() * 2 * (w + hh); if (p < w) { lx = p - w / 2; ly = hh / 2; } else if (p < w + hh) { lx = w / 2; ly = hh / 2 - (p - w); } else if (p < 2 * w + hh) { lx = w / 2 - (p - w - hh); ly = -hh / 2; } else { lx = -w / 2; ly = -hh / 2 + (p - 2 * w - hh); } }
-      else { const line = Math.floor(rnd() * 7); let len = 0.5; for (let qq = 0; qq <= line; qq++) len = 0.3 + g() * 0.42; if (line === 0) len = 0.5; lx = -0.32 + rnd() * len; ly = 0.4 - line * 0.13; }
-      a[i * 3] = cx + lx * Math.cos(phi); a[i * 3 + 1] = cy + ly; a[i * 3 + 2] = cz - lx * Math.sin(phi); } return a; }
-  function helix() { const a = new Float32Array(N * 3), R = 1.05;
-    for (let i = 0; i < N; i++) { let x, y, z; const m = i % 5;
-      if (m < 4) { const t = rnd() * 2 - 1, ang = t * PI * 4 + (m % 2 ? PI : 0); y = t * 2.7; x = R * Math.cos(ang) + (rnd() - 0.5) * 0.08; z = R * Math.sin(ang) + (rnd() - 0.5) * 0.08; }
-      else { const k = Math.floor(rnd() * 28), tk = k / 27 * 2 - 1, ak = tk * PI * 4, u = rnd() * 2 - 1; y = tk * 2.7; x = R * u * Math.cos(ak); z = R * u * Math.sin(ak); }
-      a[i * 3] = x; a[i * 3 + 1] = y; a[i * 3 + 2] = z; } return a; }
-  function rings() { const a = new Float32Array(N * 3), Rs = [1.05, 1.5, 1.95, 2.4, 2.85], tx = [1.2, -0.5, 0.35, -1.0, 0.15], tz = [0.2, 0.6, -0.45, 0.1, -0.25];
-    for (let i = 0; i < N; i++) { let x, y, z;
-      if (i < N * 0.1) { const ph = Math.acos(2 * rnd() - 1), th = rnd() * TAU, r = 0.42 * Math.cbrt(rnd()); x = r * Math.sin(ph) * Math.cos(th); y = r * Math.cos(ph); z = r * Math.sin(ph) * Math.sin(th); }
-      else { const k = i % 5, ang = rnd() * TAU, R = Rs[k] + (rnd() - 0.5) * 0.05, px = R * Math.cos(ang), py = (rnd() - 0.5) * 0.04, pz = R * Math.sin(ang);
-        const cy = Math.cos(tx[k]), sy = Math.sin(tx[k]), y1 = py * cy - pz * sy, z1 = py * sy + pz * cy, cz = Math.cos(tz[k]), sz = Math.sin(tz[k]);
-        x = px * cz - y1 * sz; y = px * sz + y1 * cz; z = z1; }
-      a[i * 3] = x; a[i * 3 + 1] = y; a[i * 3 + 2] = z; } return a; }
-  const shapes = [sphere(), wave(), bars(), funnel(), pagesShape(), helix(), rings()];
-  const D = mobile
-    ? [[0, 0.6, 0.78, 0.15, .75], [0, -1.4, 0.8, 0.55, .5], [0, 0.2, 0.7, 0.1, .45], [0, 0, 0.75, 0.2, .45], [0, 0, 0.7, 0.05, .35], [0, 0, 0.75, 0.3, .45], [0, 0.2, 0.85, 0.35, .85]]
-    : [[2.5, 0.35, 1.0, 0.15, .95], [0, -1.25, 1.05, 0.5, .6], [2.6, -0.1, 0.88, 0.12, .7], [0, 0.1, 1.0, 0.25, .5], [0, 0, 0.92, 0.05, .42], [3.0, 0, 0.95, 0.3, .6], [0, 0.25, 1.0, 0.38, 1.0]];
-  const pos = new Float32Array(N * 3); pos.set(shapes[0]);
-  const cur = new Float32Array(N * 3); cur.set(shapes[0]);
-  for (let s0 = 0; s0 < cur.length; s0++) cur[s0] *= reduce ? 1 : (0.2 + Math.random() * 0.2);
-  const col = new Float32Array(N * 3), rnda = new Float32Array(N), delay = new Float32Array(N);
-  const hex = h => [parseInt(h.slice(1, 3), 16) / 255, parseInt(h.slice(3, 5), 16) / 255, parseInt(h.slice(5, 7), 16) / 255];
-  const C1 = hex('#C3C9FF'), C2 = hex('#FF7A45'), C3 = hex('#F5E26A');
-  for (let i = 0; i < N; i++) { const r = Math.random(), c = r < 0.74 ? C1 : (r < 0.94 ? C2 : C3); col.set(c, i * 3); rnda[i] = Math.random(); delay[i] = Math.random(); }
-  const geo = new THREE.BufferGeometry();
-  geo.setAttribute('position', new THREE.BufferAttribute(cur, 3).setUsage(THREE.DynamicDrawUsage));
-  geo.setAttribute('aColor', new THREE.BufferAttribute(col, 3)); geo.setAttribute('aRand', new THREE.BufferAttribute(rnda, 1));
-  const mat = new THREE.ShaderMaterial({
-    transparent: true, depthWrite: false, blending: THREE.AdditiveBlending,
-    uniforms: { uTime: { value: 0 }, uSize: { value: mobile ? 3.4 : 3.0 }, uPR: { value: renderer.getPixelRatio() }, uOpacity: { value: .95 } },
-    vertexShader: `uniform float uTime; uniform float uSize; uniform float uPR; attribute vec3 aColor; attribute float aRand; varying vec3 vColor; varying float vA;
-      void main(){ vec3 p=position; p+=0.035*vec3(sin(uTime*0.9+aRand*31.0),cos(uTime*0.8+aRand*17.0),sin(uTime*0.7+aRand*11.0));
-      vec4 mv=modelViewMatrix*vec4(p,1.0); gl_PointSize=uSize*uPR*(0.55+aRand*0.9)*(8.0/-mv.z); gl_Position=projectionMatrix*mv;
-      vColor=aColor; vA=smoothstep(15.0,4.0,-mv.z)*(0.55+0.45*sin(uTime*1.3+aRand*40.0)*0.5+0.25); }`,
-    fragmentShader: `uniform float uOpacity; varying vec3 vColor; varying float vA;
-      void main(){ float d=length(gl_PointCoord-0.5); float a=smoothstep(0.5,0.05,d); gl_FragColor=vec4(vColor,a*vA*uOpacity); }`,
-  });
-  const group = new THREE.Group(); group.add(new THREE.Points(geo, mat)); scene.add(group);
-  const secs = [...document.querySelectorAll('[data-shape]')]; let marks = [];
-  const measure = () => { marks = secs.map(el => { const box = el.parentElement && el.parentElement.classList.contains('pin-spacer') ? el.parentElement : el; return { top: box.getBoundingClientRect().top + scrollY, shape: +el.dataset.shape }; }); };
-  measure(); addEventListener('load', measure); if (hasGsap) ScrollTrigger.addEventListener('refresh', measure);
-  const sstep = x => { x = Math.max(0, Math.min(1, x)); return x * x * (3 - 2 * x); };
-  function state() {
-    const p = scrollY + innerHeight * 0.55; let i = 0;
-    for (let k = 0; k < marks.length; k++) if (p >= marks[k].top) i = k;
-    if (i >= marks.length - 1) return { a: marks[i].shape, b: marks[i].shape, t: 0 };
-    const local = (p - marks[i].top) / Math.max(1, marks[i + 1].top - marks[i].top);
-    return { a: marks[i].shape, b: marks[i + 1].shape, t: sstep((local - 0.55) / 0.45) };
+/* ================================================================ work rows: hover preview */
+(() => {
+  const pv = document.querySelector('.preview'), img = pv.querySelector('img');
+  const best = {};
+  for (const t of tiles) {
+    if (!t.url) continue;
+    const rank = { Homepage: 0, 'Case study': 1, 'Service page': 2, Blog: 3, 'Brand page': 4 }[t.t] ?? 5;
+    if (!best[t.c] || rank < best[t.c][1]) best[t.c] = [t.i, rank];
   }
-  const mouse = { x: 0, y: 0 }, ms = { x: 0, y: 0 };
-  addEventListener('pointermove', e => { mouse.x = e.clientX / innerWidth * 2 - 1; mouse.y = e.clientY / innerHeight * 2 - 1; }, { passive: true });
-  let lastKey = '', spin = 0, vis = 1; const place = D[0].slice(), clock = new THREE.Clock();
-  function frame() {
-    requestAnimationFrame(frame);
-    const dt = Math.min(clock.getDelta(), 0.05), el = clock.elapsedTime;
-    vis += ((workVisible ? 0 : 1) - vis) * 0.08;
-    glCanvas.style.opacity = vis.toFixed(3);
-    if (vis < 0.01) return;
-    const st = state(), key = st.a + '|' + st.b + '|' + st.t.toFixed(3);
-    if (key !== lastKey) {
-      lastKey = key; const A = shapes[st.a], B = shapes[st.b], t = st.t;
-      if (st.a === st.b || t <= 0) pos.set(A); else if (t >= 1) pos.set(B);
-      else for (let j = 0; j < N; j++) { const tt = sstep(t * 1.45 - delay[j] * 0.45), o = j * 3; pos[o] = A[o] + (B[o] - A[o]) * tt; pos[o + 1] = A[o + 1] + (B[o + 1] - A[o + 1]) * tt; pos[o + 2] = A[o + 2] + (B[o + 2] - A[o + 2]) * tt; }
-      const da = D[st.a], db = D[st.b]; for (let qq = 0; qq < 5; qq++) place[qq] = da[qq] + (db[qq] - da[qq]) * sstep(st.t);
+  if (!fine) return;
+  let x = 0, y = 0, px = 0, py = 0, on = false;
+  const rows = document.getElementById('rows');
+  rows.addEventListener('pointerover', e => { const r = e.target.closest('.row'); if (!r) return; const b = best[r.dataset.index]; if (!b) return; img.src = `work/${pad4(b[0])}.webp`; pv.classList.add('on'); on = true; });
+  rows.addEventListener('pointerleave', () => { pv.classList.remove('on'); on = false; });
+  addEventListener('pointermove', e => { x = e.clientX; y = e.clientY; }, { passive: true });
+  (function loop() {
+    px += (x - px) * 0.14; py += (y - py) * 0.14;
+    if (on) {
+      const el = document.elementFromPoint(x, y);
+      if (!el || !el.closest('#rows')) { pv.classList.remove('on'); on = false; }
+      else { pv.style.left = `${px + 30}px`; pv.style.top = `${py - 120}px`; }
     }
-    const ease = reduce ? 1 : Math.min(1, dt * 4.2);
-    for (let m = 0; m < cur.length; m++) cur[m] += (pos[m] - cur[m]) * ease;
-    geo.attributes.position.needsUpdate = true;
-    ms.x += (mouse.x - ms.x) * 0.05; ms.y += (mouse.y - ms.y) * 0.05; spin += reduce ? 0 : dt * 0.09;
-    group.position.x += (place[0] - group.position.x) * 0.08; group.position.y += (place[1] - group.position.y) * 0.08;
-    const sc = group.scale.x + (place[2] - group.scale.x) * 0.08; group.scale.set(sc, sc, sc);
-    group.rotation.y = spin + ms.x * 0.35; group.rotation.x = place[3] + ms.y * 0.18;
-    mat.uniforms.uOpacity.value += (place[4] - mat.uniforms.uOpacity.value) * 0.08; mat.uniforms.uTime.value = el;
-    renderer.render(scene, camera);
-  }
-  requestAnimationFrame(frame);
-  addEventListener('resize', () => { camera.aspect = innerWidth / innerHeight; camera.updateProjectionMatrix(); renderer.setSize(innerWidth, innerHeight, false); measure(); });
+    requestAnimationFrame(loop);
+  })();
 })();
 
 /* ================================================================ WORK: portrait made of work */
@@ -358,7 +235,7 @@ async function workScene() {
   const imgs = await loadAtlases();
   const L = TD.layout[V], M = MD[V];
   const renderer = new THREE.WebGLRenderer({ canvas: wfCanvas, antialias: true, powerPreference: 'high-performance' });
-  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2)); renderer.setClearColor(0x080C24, 1);
+  renderer.setPixelRatio(Math.min(devicePixelRatio, small ? 1.75 : 2)); renderer.setClearColor(0x0E0E0E, 1);
   const scene = new THREE.Scene(), camera = new THREE.PerspectiveCamera(52, 1, 0.1, 400); camera.position.set(0, 0, 6);
 
   const rand = (() => { let s = 20261115; return () => (s = (s * 16807) % 2147483647) / 2147483647; })();
@@ -385,7 +262,7 @@ async function workScene() {
   const textures = imgs.map(img => { const t = new THREE.Texture(img); t.flipY = false; t.colorSpace = THREE.SRGBColorSpace; t.minFilter = THREE.LinearMipmapLinearFilter; t.anisotropy = Math.min(8, renderer.capabilities.getMaxAnisotropy()); t.needsUpdate = true; return t; });
   const U = {
     uP: { value: 0 }, uTravel: { value: 0 }, uDepth: { value: DEPTH }, uFar: { value: FAR }, uHover: { value: -1 }, uTime: { value: 0 }, uShift: { value: new THREE.Vector2() },
-    uTintK: { value: small ? 0.7 : 0.66 }, uBg: { value: new THREE.Color(0x080C24) }, uAccent: { value: new THREE.Color(0xFF7A45) }, uWobble: { value: reduce ? 0 : 1 },
+    uTintK: { value: small ? 0.76 : 0.74 }, uBg: { value: new THREE.Color(0x0E0E0E) }, uAccent: { value: new THREE.Color(0xFF4D12) }, uWobble: { value: reduce ? 0 : 1 },
   };
   const vert = `
     attribute vec4 aP0; attribute vec4 aP1; attribute vec4 aTint; attribute vec4 aRect; attribute float aId;
@@ -479,7 +356,7 @@ async function workScene() {
 
   const tip = document.getElementById('tip'), bar = document.getElementById('wfBar'), hud = document.getElementById('wfLabel');
   const hudIdle = small ? `<b>${tiles.length}</b> pieces · tap to open` : `<b>${tiles.length}</b> pieces of work · hover to see, click to open`;
-  if (small) { const l = document.querySelector('.wf-copy .lede'); if (l) l.textContent = l.textContent.replace('Hover a tile to see what it is, click to open it.', 'Tap any tile to open it.'); }
+  if (small) { const l = document.querySelector('.ar-copy .lede'); if (l) l.innerHTML = l.innerHTML.replace("Hover to see what's what, click to open one.", 'Tap any tile to open it.'); }
   hud.innerHTML = hudIdle;
   let hovered = -1, t0 = performance.now(), frame = 0;
   function resize() {
@@ -508,8 +385,8 @@ async function workScene() {
       const id = pick();
       if (id !== hovered) {
         hovered = id; U.uHover.value = id;
-        if (id >= 0) { const t = tiles[inst[id].k]; tip.innerHTML = label(t); tip.classList.add('on'); wfCanvas.classList.add('pointing'); hud.innerHTML = label(t); }
-        else { tip.classList.remove('on'); wfCanvas.classList.remove('pointing'); hud.innerHTML = hudIdle; }
+        if (id >= 0) { const t = tiles[inst[id].k]; tip.innerHTML = label(t); tip.classList.add('on'); wfCanvas.classList.add('pointing'); hud.innerHTML = label(t); setCursor('Open'); }
+        else { tip.classList.remove('on'); wfCanvas.classList.remove('pointing'); hud.innerHTML = hudIdle; setCursor(null); }
       }
       if (hovered >= 0) { tip.style.left = tipX + 'px'; tip.style.top = tipY + 'px'; }
     }
