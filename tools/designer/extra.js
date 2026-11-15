@@ -30,6 +30,7 @@ export const BRANDS = {
   tag: { name: 'TAG Manufacturing', sector: 'Excavator attachments', region: 'Chattanooga, US', bg: '#141414', bg2: '#f5c400', logo: 'tag.png', on: 'dark', chips: ['SEO', 'AI search', 'Audit'], line: 'SEO and AI visibility for a US attachments manufacturer' },
   advayan: { name: 'Advayan', sector: 'IT & SAP consulting', region: 'US', bg: '#0a0f3d', bg2: '#6ab7ff', logo: 'advayan.png', on: 'dark', chips: ['SEO', 'AI search', 'Web'], line: 'SEO, AI visibility and a website revamp for an IT and SAP consultancy' },
   zapfire: { name: 'ZAP FIRE', sector: 'Fire safety', region: 'Gurugram', bg: '#1a1210', bg2: '#f26b21', logo: 'zapfire.png', on: 'dark', chips: ['Content', 'SEO', 'Local'], line: 'Content and local SEO for a fire protection company' },
+  modernize: { name: 'Modernize Software', sector: 'Legacy software modernization', region: 'Austin, US', bg: '#ffffff', bg2: '#4f8a1c', logo: 'modernize.png', on: 'light', chips: ['Website', 'SEO', 'Content'], line: 'A website built from scratch for a legacy code modernization company' },
   iinfotanks: { name: 'IInfotanks', sector: 'AI-powered marketing agency', region: 'Bengaluru', bg: '#ffffff', bg2: '#1a6fe0', logo: 'iinfotanks.png', on: 'light', chips: ['SEO', 'Content', 'Pages at scale'], line: 'In-house: case studies, 300+ location pages and the agency’s own search' },
 };
 
@@ -97,6 +98,7 @@ const CASE_LINES = {
   tag: ['From live-crawl audit to a 90-day plan', 'Excavator attachments, found by dealers'],
   advayan: ['A revamp built for search and AI', 'SAP expertise with an entity footprint'],
   zapfire: ['Fire safety, found locally', 'Service pages for every protection system'],
+  modernize: ['A new website, built from scratch', 'COBOL, Ada, Fortran: one page each'],
   iinfotanks: ['300+ location pages, one system', 'An agency that ships its own SEO'],
 };
 

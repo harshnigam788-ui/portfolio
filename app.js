@@ -9,7 +9,7 @@ const hasGsap = !!(gsap && ScrollTrigger);
 if (hasGsap) gsap.registerPlugin(ScrollTrigger);
 const MAIL = 'harshnigam788@gmail.com';
 const API = 'https://harshnigam788-ui.github.io/portfolio/resume/resume.json';
-const PLATE = { valintry360: '#0b1f3a', valintry: '#ffffff', ignitehcm: '#1b1719', bullseye: '#ffffff', calance: '#ffffff', prateek: '#0b2a4a', tag: '#141414', advayan: '#0a0f3d', zapfire: '#1a1210', iinfotanks: '#ffffff' };
+const PLATE = { valintry360: '#0b1f3a', valintry: '#ffffff', ignitehcm: '#1b1719', bullseye: '#ffffff', calance: '#ffffff', prateek: '#0b2a4a', tag: '#141414', advayan: '#0a0f3d', zapfire: '#1a1210', modernize: '#ffffff', iinfotanks: '#ffffff' };
 const TYPES = ['Homepage', 'Service page', 'Case study', 'Blog', 'Brand page'];
 const pad4 = n => String(n).padStart(4, '0');
 const esc = s => String(s || '').replace(/[&<>"]/g, c => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[c]));

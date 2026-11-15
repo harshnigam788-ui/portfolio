@@ -10,7 +10,7 @@ for f in os.listdir(f'{SITE}/work'): os.remove(f'{SITE}/work/{f}')
 for f in os.listdir(f'{SITE}/thumb'): os.remove(f'{SITE}/thumb/{f}')
 
 NAMES = {'valintry360': 'VALiNTRY360', 'valintry': 'VALiNTRY', 'ignitehcm': 'Ignite HCM', 'bullseye': 'Bullseye Engagement', 'calance': 'Calance',
-         'prateek': 'Prateek Group', 'tag': 'TAG Manufacturing', 'advayan': 'Advayan', 'zapfire': 'ZAP FIRE', 'iinfotanks': 'IInfotanks'}
+         'prateek': 'Prateek Group', 'tag': 'TAG Manufacturing', 'advayan': 'Advayan', 'zapfire': 'ZAP FIRE', 'modernize': 'Modernize Software', 'iinfotanks': 'IInfotanks'}
 BAD_TITLE = re.compile(r'(404|not found|page not found|just a moment|attention required|access denied|forbidden|error|under maintenance|coming soon)', re.I)
 
 def dhash(im, n=12):
