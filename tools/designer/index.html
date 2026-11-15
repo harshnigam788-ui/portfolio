@@ -1,0 +1,14 @@
+<!doctype html>
+<html><head><meta charset="utf-8">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Instrument+Serif:ital@0;1&family=Inter+Tight:wght@400;500;600;700&display=swap">
+</head><body>
+<script type="module">
+import { renderAll } from './extra.js';
+window.go = async () => {
+  await document.fonts.load('64px "Instrument Serif"'); await document.fonts.load('italic 64px "Instrument Serif"');
+  await document.fonts.load('500 16px "Inter Tight"'); await document.fonts.load('600 16px "Inter Tight"'); await document.fonts.load('700 16px "Inter Tight"');
+  return await renderAll();
+};
+window.ready = true;
+</script>
+</body></html>

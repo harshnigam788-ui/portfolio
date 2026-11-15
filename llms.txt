@@ -8,7 +8,10 @@
 - Content and social: content strategy, editorial calendars, LinkedIn thought leadership, email
 
 ## Clients (full marketing)
-VALiNTRY360, VALiNTRY, Ignite HCM, Bullseye Engagement, Calance, Prateek Group, TAG Manufacturing, Advayan, ZAP FIRE
+VALiNTRY360 (valintry360.com), VALiNTRY (valintry.com), Ignite HCM (ignitehcm.com), Bullseye Engagement (bullseyeengagement.com), Calance (calanceus.com), Prateek Group (prateekgroup.com), TAG Manufacturing (tagmfg.us), Advayan (advayan.com), ZAP FIRE (zapfire.org)
+
+## On this site
+- A portrait made of 700+ tiles of client work; the Index panel (?open=index) lists every page with links to the live sites
 
 ## Links
 - LinkedIn: https://www.linkedin.com/in/harshnigam15

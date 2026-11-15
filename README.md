@@ -1,25 +1,25 @@
-# harshnigam — portfolio
+# Harsh Nigam — portfolio
 
-Personal site for Harsh Nigam, Marketing Strategist. A single static page: a Three.js
-fly-through of work tiles behind the hero, with Work, About and Contact panels.
+A static, single-page portfolio. The hero is a portrait of Harsh made from 700+ tiles of real
+client work (websites, blogs, service pages, case studies) plus designed tiles. Scrolling breaks
+the portrait apart into a Three.js fly-through; every page tile opens a preview with a link to
+the live page, and the Index panel lists every page with client and type filters.
 
-No build step. Any static host works (Cloudflare Pages, GitHub Pages, Netlify).
+No build step to run the site — any static host works (GitHub Pages, Netlify, Cloudflare Pages).
 
-## Files
-- `index.html` — all copy, panels, meta tags and Person schema (crawlable without JS)
-- `style.css` — design tokens at the top (`--signal` is the accent colour)
-- `app.js` — UI (panels, clock, contact form) and the WebGL scene
-- `tiles.js` — the tile artwork, drawn in code; client list lives in `CLIENTS`
-- `vendor/three.module.min.js` — Three.js r169 (MIT)
-- `og.png`, `favicon.svg`, `robots.txt`, `llms.txt`
+## Site files
+- `index.html`, `style.css`, `app.js` — page, styles, UI and WebGL scene
+- `data/tiles.json` — every tile: client, type, title, live URL (or label for designed tiles), atlas layout
+- `data/mosaic.json` — portrait mosaic cells for desktop (`lg`) and mobile (`sm`)
+- `atlas/` — texture atlases (`lg-*` 256×192 tiles, `sm-*` 128×96 tiles)
+- `work/` — 1024×768 previews for the lightbox · `thumb/` — 320×240 index thumbnails
+- `logos/` — client logos · `vendor/three.module.min.js` — Three.js r169 (MIT)
 
-## Editing
-- Copy: edit `index.html`. Client cards in the fly-through come from `CLIENTS` in `tiles.js`.
-- Contact form opens the visitor's email app with the enquiry filled in. To send from the
-  server instead, add an `/api/contact` function (e.g. Cloudflare Pages Function + Resend) and
-  replace the `mailto` line in `app.js`.
-- Real work images: add a tile kind that draws an `Image` onto the atlas in `buildAtlas`
-  (load images first, then call `P.image(ctx, d)`), and push `{ kind: 'image', src, label }` defs.
+## Rebuilding the tiles (`tools/`)
+1. `sitemaps.py` → pull URLs from each client sitemap
+2. `select.py` → choose pages per client and type
+3. `shoot.py` → screenshot them with Playwright + Chrome
+4. `designer/` → designed tiles (logos, case-study cards, metrics), rendered in a browser
+5. `assemble.py` → filter, pack atlases, write previews, thumbnails, `tiles.json` and the mosaic
 
-## Run locally
-    python3 -m http.server 8000   # then open http://localhost:8000
+To add new work: add URLs to the selection, re-run 3 and 5, commit.
