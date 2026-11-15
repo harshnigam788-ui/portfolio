@@ -220,12 +220,10 @@ section { padding: clamp(110px, 16vh, 190px) var(--g) clamp(40px, 8vh, 90px); }
 .bx-copy { position: absolute; z-index: 2; left: var(--g); top: 50%; transform: translateY(-50%); max-width: 46vw; pointer-events: none; }
 .bx-title { margin: 0 0 18px; font: 500 clamp(1.4rem, 2.2vw, 2rem)/1 var(--sans); letter-spacing: -0.03em; color: var(--sub); }
 .bx-list { list-style: none; margin: 0; padding: 0; }
-.bx-list li { font: 600 clamp(2.6rem, 6.4vw, 7rem)/.94 var(--sans); letter-spacing: -0.055em; color: color-mix(in srgb, var(--fg) 18%, transparent); transition: color .5s, transform .7s var(--spring); transform-origin: left; }
+.bx-list li { font: 600 clamp(2.6rem, 6.4vw, 7rem)/.94 var(--sans); letter-spacing: -0.055em; color: color-mix(in srgb, var(--fg) 18%, transparent); transition: color .6s var(--ease), transform .8s var(--ease); transform-origin: left; }
 .bx-list li em { letter-spacing: -0.03em; }
 .bx-list li.on { color: var(--fg); transform: scale(1.04); }
-.bx-list li.on[data-c="ball"] em { color: #FF7A2E; }
-.bx-list li.on[data-c="guitar"] em { color: var(--pink); }
-.bx-list li.on[data-c="ai"] em { color: var(--lime); }
+.bx-list li.on em { color: var(--lime); }
 .bx-hint { margin: 26px 0 0; color: var(--sub); }
 .bx-dots { position: absolute; z-index: 2; right: var(--g); bottom: 28px; display: flex; gap: 8px; }
 .bx-dots i { width: 10px; height: 10px; border-radius: 50%; background: color-mix(in srgb, var(--fg) 25%, transparent); transition: all .4s var(--spring); }

@@ -223,18 +223,15 @@ const TOOLS = [
   new IntersectionObserver((es, ob) => es.forEach(e => { if (e.isIntersecting) { start(); if (started) ob.disconnect(); } }), { threshold: 0.2 }).observe(pit);
 })();
 
-/* ================================================================ BEYOND: particles that morph */
+/* ================================================================ BEYOND: one colour of particles, scrubbed by scroll from shape to shape */
 (async () => {
   const sec = document.getElementById('beyond'), cv = document.getElementById('px'), ctx = cv.getContext('2d');
   const items = [...document.querySelectorAll('#bxList li')], dots = [...document.querySelectorAll('.bx-dots i')];
-  try { await document.fonts.load('800 120px "Inter Tight"'); await document.fonts.load('700 120px "Inter Tight"'); } catch {}
-  const N = small ? 1500 : 3000, S = 440;
-  const PAL = [['#FF7A2E', '#FFB27A'], ['#FF9ECF', '#FFD23F', '#FFF3E3', '#B9A6FF'], ['#C9F24A', '#FFF3E3', '#FF9ECF']];
-  const hex = h => [parseInt(h.slice(1, 3), 16), parseInt(h.slice(3, 5), 16), parseInt(h.slice(5, 7), 16)];
+  try { await document.fonts.load('800 120px "Inter Tight"'); } catch {}
+  const N = small ? 1500 : 2800, S = 440, COLOR = '#C9F24A';
   function ball(g) {
     g.translate(S / 2, S / 2);
-    g.fillStyle = PAL[0][0]; g.beginPath(); g.arc(0, 0, S * 0.42, 0, 7); g.fill();
-    g.fillStyle = PAL[0][1]; g.beginPath(); g.arc(-S * 0.12, -S * 0.14, S * 0.1, 0, 7); g.fill();
+    g.beginPath(); g.arc(0, 0, S * 0.42, 0, 7); g.fill();
     g.globalCompositeOperation = 'destination-out'; g.lineWidth = S * 0.032;
     g.beginPath(); g.moveTo(0, -S * 0.5); g.lineTo(0, S * 0.5); g.stroke();
     g.beginPath(); g.moveTo(-S * 0.5, 0); g.lineTo(S * 0.5, 0); g.stroke();
@@ -243,48 +240,43 @@ const TOOLS = [
   }
   function guitar(g) {
     g.translate(S / 2, S / 2); g.rotate(-0.62); g.scale(0.86, 0.86);
-    g.fillStyle = PAL[1][0];
     g.beginPath(); g.arc(0, S * 0.2, S * 0.2, 0, 7); g.fill();
     g.beginPath(); g.arc(0, -S * 0.02, S * 0.155, 0, 7); g.fill();
-    g.fillStyle = PAL[1][1]; g.fillRect(-S * 0.032, -S * 0.47, S * 0.064, S * 0.32);
+    g.fillRect(-S * 0.032, -S * 0.47, S * 0.064, S * 0.32);
     g.beginPath(); g.roundRect(-S * 0.055, -S * 0.575, S * 0.11, S * 0.12, S * 0.025); g.fill();
-    g.fillStyle = PAL[1][2]; [-1, 1].forEach(sd => [0, 1, 2].forEach(k => { g.beginPath(); g.arc(sd * S * 0.075, -S * (0.55 - k * 0.04), S * 0.014, 0, 7); g.fill(); }));
-    g.globalCompositeOperation = 'destination-out'; g.beginPath(); g.arc(0, S * 0.05, S * 0.06, 0, 7); g.fill();
-    g.globalCompositeOperation = 'source-over';
-    g.strokeStyle = PAL[1][3]; g.lineWidth = S * 0.014; g.beginPath(); g.arc(0, S * 0.05, S * 0.08, 0, 7); g.stroke();
-    g.fillStyle = PAL[1][2]; g.fillRect(-S * 0.085, S * 0.27, S * 0.17, S * 0.035);
-    g.strokeStyle = PAL[1][2]; g.lineWidth = S * 0.007;
-    [-1.5, -0.5, 0.5, 1.5].forEach(k => { g.beginPath(); g.moveTo(k * S * 0.012, -S * 0.46); g.lineTo(k * S * 0.012, S * 0.28); g.stroke(); });
+    [-1, 1].forEach(sd => [0, 1, 2].forEach(k => { g.beginPath(); g.arc(sd * S * 0.075, -S * (0.55 - k * 0.04), S * 0.014, 0, 7); g.fill(); }));
+    g.globalCompositeOperation = 'destination-out';
+    g.beginPath(); g.arc(0, S * 0.05, S * 0.065, 0, 7); g.fill();
+    g.fillRect(-S * 0.09, S * 0.255, S * 0.18, S * 0.012);
   }
   function chip(g) {
     g.translate(S / 2, S / 2);
-    g.fillStyle = PAL[2][0];
     for (let k = 0; k < 4; k++) {
       const o = (k - 1.5) * S * 0.13;
       [[o, -S * 0.39], [o, S * 0.39], [-S * 0.39, o], [S * 0.39, o]].forEach(([x, y]) => { g.beginPath(); g.arc(x, y, S * 0.026, 0, 7); g.fill(); });
       g.fillRect(o - S * 0.012, -S * 0.39, S * 0.024, S * 0.06); g.fillRect(o - S * 0.012, S * 0.33, S * 0.024, S * 0.06);
       g.fillRect(-S * 0.39, o - S * 0.012, S * 0.06, S * 0.024); g.fillRect(S * 0.33, o - S * 0.012, S * 0.06, S * 0.024);
     }
-    g.strokeStyle = PAL[2][0]; g.lineWidth = S * 0.04; g.beginPath(); g.roundRect(-S * 0.3, -S * 0.3, S * 0.6, S * 0.6, S * 0.07); g.stroke();
-    g.fillStyle = PAL[2][1]; g.font = `800 ${S * 0.34}px "Inter Tight", Arial, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('AI', 0, S * 0.02);
-    g.fillStyle = PAL[2][2]; g.beginPath(); g.arc(-S * 0.2, -S * 0.2, S * 0.03, 0, 7); g.fill();
+    g.lineWidth = S * 0.04; g.beginPath(); g.roundRect(-S * 0.3, -S * 0.3, S * 0.6, S * 0.6, S * 0.07); g.stroke();
+    g.font = `800 ${S * 0.34}px "Inter Tight", Arial, sans-serif`; g.textAlign = 'center'; g.textBaseline = 'middle'; g.fillText('AI', 0, S * 0.02);
   }
-  function sample(fn, pal) {
+  // sample each shape, then order the points by angle so particle i travels to a nearby spot in the next shape
+  function sample(fn) {
     const c = document.createElement('canvas'); c.width = c.height = S;
-    const g = c.getContext('2d'); fn(g);
-    const d = g.getImageData(0, 0, S, S).data, pts = [], P = pal.map(hex);
-    for (let y = 0; y < S; y += 2) for (let x = 0; x < S; x += 2) {
-      const k = (y * S + x) * 4; if (d[k + 3] < 170) continue;
-      let best = 0, bd = 1e9;
-      P.forEach((p, j) => { const dd = (p[0] - d[k]) ** 2 + (p[1] - d[k + 1]) ** 2 + (p[2] - d[k + 2]) ** 2; if (dd < bd) { bd = dd; best = j; } });
-      pts.push([x / S - 0.5, y / S - 0.5, best]);
-    }
+    const g = c.getContext('2d'); g.fillStyle = g.strokeStyle = '#000'; fn(g);
+    const d = g.getImageData(0, 0, S, S).data, pts = [];
+    for (let y = 0; y < S; y += 2) for (let x = 0; x < S; x += 2) if (d[(y * S + x) * 4 + 3] > 140) pts.push([x / S - 0.5, y / S - 0.5]);
     for (let i = pts.length - 1; i > 0; i--) { const j = Math.random() * (i + 1) | 0; [pts[i], pts[j]] = [pts[j], pts[i]]; }
-    return Array.from({ length: N }, (_, i) => pts[i % pts.length]);
+    const pick = Array.from({ length: N }, (_, i) => pts[i % pts.length]);
+    pick.sort((a, b) => Math.atan2(a[1], a[0]) - Math.atan2(b[1], b[0]));
+    const X = new Float32Array(N), Y = new Float32Array(N);
+    pick.forEach((p, i) => { X[i] = p[0]; Y[i] = p[1]; });
+    return { X, Y };
   }
-  const SH = [sample(ball, PAL[0]), sample(guitar, PAL[1]), sample(chip, PAL[2])];
-  const X = new Float32Array(N), Y = new Float32Array(N), VX = new Float32Array(N), VY = new Float32Array(N), WAIT = new Float32Array(N), PH = new Float32Array(N);
-  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, size = 0, stage = -1, mx = -9999, my = -9999, visible = false, order = [];
+  const SH = [sample(ball), sample(guitar), sample(chip)];
+  const OX = new Float32Array(N), OY = new Float32Array(N), VX = new Float32Array(N), VY = new Float32Array(N), D = new Float32Array(N), IX = new Float32Array(N), IY = new Float32Array(N);
+  for (let i = 0; i < N; i++) { D[i] = (i / N) * 0.35 + Math.random() * 0.08; const a = Math.random() * 6.283, r = 0.6 + Math.random() * 0.6; IX[i] = Math.cos(a) * r; IY[i] = Math.sin(a) * r; }
+  let W = 0, H = 0, dpr = 1, cx = 0, cy = 0, size = 0, mx = -9999, my = -9999, visible = false, sp = 0, intro = 0, stage = -1;
   function resize() {
     dpr = Math.min(devicePixelRatio || 1, 2); W = cv.clientWidth; H = cv.clientHeight;
     cv.width = W * dpr; cv.height = H * dpr; ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
@@ -292,18 +284,6 @@ const TOOLS = [
     else { cx = W / 2; cy = H * 0.33; size = Math.min(W * 0.92, H * 0.5); }
   }
   resize(); addEventListener('resize', resize);
-  for (let i = 0; i < N; i++) { X[i] = Math.random() * W; Y[i] = Math.random() * H; PH[i] = Math.random() * 6.283; }
-  function setStage(s) {
-    if (s === stage) return;
-    const first = stage === -1; stage = s;
-    items.forEach((li, i) => li.classList.toggle('on', i === s)); dots.forEach((d, i) => d.classList.toggle('on', i === s));
-    order = Array.from({ length: N }, (_, i) => i).sort((a, b) => SH[s][a][2] - SH[s][b][2]);
-    if (reduce) { for (let i = 0; i < N; i++) { X[i] = cx + SH[s][i][0] * size; Y[i] = cy + SH[s][i][1] * size; } return; }
-    for (let i = 0; i < N; i++) {
-      const a = Math.random() * 6.283, f = first ? 0 : 4 + Math.random() * 14;
-      VX[i] += Math.cos(a) * f; VY[i] += Math.sin(a) * f; WAIT[i] = first ? Math.random() * 30 : 4 + Math.random() * 22;
-    }
-  }
   const move = (x, y) => { const r = cv.getBoundingClientRect(); mx = x - r.left; my = y - r.top; };
   cv.addEventListener('pointermove', e => move(e.clientX, e.clientY));
   cv.addEventListener('pointerleave', () => { mx = my = -9999; });
@@ -311,27 +291,31 @@ const TOOLS = [
   cv.addEventListener('touchend', () => { mx = my = -9999; });
   onScreen(sec, v => { visible = v; });
   const progress = () => { const r = sec.getBoundingClientRect(); return Math.min(1, Math.max(0, -r.top / Math.max(1, r.height - innerHeight))); };
-  const R = small ? 70 : 110, R2 = R * R, dot = small ? 2.1 : 2.3;
-  let t = 0;
+  const smooth = t => t * t * (3 - 2 * t);
+  // scroll position to a continuous shape index: hold, morph, hold, morph, hold
+  const shapeAt = pr => pr < 0.22 ? 0 : pr < 0.42 ? (pr - 0.22) / 0.2 : pr < 0.58 ? 1 : pr < 0.78 ? 1 + (pr - 0.58) / 0.2 : 2;
+  const R = small ? 70 : 110, R2 = R * R, dot = small ? 2 : 2.2;
   (function loop() {
     requestAnimationFrame(loop);
     if (!visible) return;
-    const pr = progress(); setStage(pr < 0.34 ? 0 : pr < 0.67 ? 1 : 2);
-    t += 0.016;
-    ctx.clearRect(0, 0, W, H);
-    const pts = SH[stage], pal = PAL[stage];
-    let col = -1;
-    for (let n = 0; n < N; n++) {
-      const i = order[n], p = pts[i];
+    sp += (progress() - sp) * (reduce ? 1 : 0.2);
+    intro = Math.min(1, intro + (reduce ? 1 : 0.012));
+    const s = shapeAt(sp), a = Math.min(1, Math.floor(s)), t = s - a, A = SH[a], B = SH[Math.min(2, a + 1)];
+    const st = Math.round(s); if (st !== stage) { stage = st; items.forEach((li, i) => li.classList.toggle('on', i === st)); dots.forEach((d, i) => d.classList.toggle('on', i === st)); }
+    const ie = smooth(intro);
+    ctx.clearRect(0, 0, W, H); ctx.fillStyle = COLOR;
+    for (let i = 0; i < N; i++) {
+      const ti = smooth(Math.min(1, Math.max(0, (t - D[i]) / 0.57)));
+      const bulge = 1 + Math.sin(ti * Math.PI) * 0.12;
+      let x = (A.X[i] + (B.X[i] - A.X[i]) * ti) * bulge, y = (A.Y[i] + (B.Y[i] - A.Y[i]) * ti) * bulge;
+      if (ie < 1) { x = IX[i] + (x - IX[i]) * ie; y = IY[i] + (y - IY[i]) * ie; }
+      x = cx + x * size; y = cy + y * size;
       if (!reduce) {
-        const tx = cx + p[0] * size + Math.sin(t * 1.3 + PH[i]) * 0.8, ty = cy + p[1] * size + Math.cos(t * 1.1 + PH[i]) * 0.8;
-        if (WAIT[i] > 0) WAIT[i]--; else { VX[i] += (tx - X[i]) * 0.022; VY[i] += (ty - Y[i]) * 0.022; }
-        const dx = X[i] - mx, dy = Y[i] - my, d2 = dx * dx + dy * dy;
-        if (d2 < R2 && d2 > 0.01) { const d = Math.sqrt(d2), f = (1 - d / R) * 3.4; VX[i] += dx / d * f; VY[i] += dy / d * f; }
-        VX[i] *= 0.86; VY[i] *= 0.86; X[i] += VX[i]; Y[i] += VY[i];
+        const px = x + OX[i], py = y + OY[i], dx = px - mx, dy = py - my, d2 = dx * dx + dy * dy;
+        if (d2 < R2 && d2 > 0.01) { const d = Math.sqrt(d2), f = (1 - d / R) * 2.6; VX[i] += dx / d * f; VY[i] += dy / d * f; }
+        VX[i] = (VX[i] - OX[i] * 0.06) * 0.86; VY[i] = (VY[i] - OY[i] * 0.06) * 0.86; OX[i] += VX[i]; OY[i] += VY[i];
       }
-      if (p[2] !== col) { col = p[2]; ctx.fillStyle = pal[col]; }
-      ctx.fillRect(X[i] - dot / 2, Y[i] - dot / 2, dot, dot);
+      ctx.fillRect(x + OX[i] - dot / 2, y + OY[i] - dot / 2, dot, dot);
     }
   })();
 })();
